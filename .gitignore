@@ -1,0 +1,39 @@
+# If you prefer the allow list template instead of the deny list, see community template:
+# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
+#
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Yab outputs
+/install-yab
+/install-yab.exe
+/install-yab-linux-amd64
+/install-yab-linux-arm64
+/install-yab-darwin-amd64
+/install-yab-darwin-arm64
+/install-yab-windows-amd64.exe
+/install-yab-windows-arm64.exe
+/yab-linux-amd64
+/yab-linux-arm64
+/yab-darwin-amd64
+/yab-darwin-arm64
+/yab-windows-amd64.exe
+/yab-windows-arm64.exe
+/yab
+/yab.exe
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Go workspace file
+go.work
