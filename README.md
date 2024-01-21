@@ -4,6 +4,8 @@ Yet another build tool :construction_worker: :construction:
 
 [![Deploy to Pages](https://github.com/Frank-Mayer/yab/actions/workflows/deploy.yml/badge.svg)](https://github.com/Frank-Mayer/yab/actions/workflows/deploy.yml)
 
+[![CodeQL](https://github.com/Frank-Mayer/yab/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Frank-Mayer/yab/actions/workflows/github-code-scanning/codeql)
+
 Wouldn't it be great if you could use the same build tool for every project?
 Regardless of operating system, programming language...
 
