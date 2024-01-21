@@ -34,7 +34,7 @@ jobs:
       - name: Build
         run: |
           go build -ldflags="-s -w" -o yab-windows-amd64.exe ./cmd/yab
-          go build -ldflags="-s -w" -o install-yab-windows-amd64.exe ./cmd/installer
+          go build -ldflags="-s -w -H=windowsgui" -o install-yab-windows-amd64.exe ./cmd/installer
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
