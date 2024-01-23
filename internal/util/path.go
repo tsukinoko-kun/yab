@@ -5,7 +5,7 @@ import (
 	"runtime"
 )
 
-var origPath string
+var origEnv map[string]string
 
 func AddToPath(pathToAdd string) {
 	// check if pathToAdd exists
@@ -15,18 +15,30 @@ func AddToPath(pathToAdd string) {
 	}
 
 	path := os.Getenv("PATH")
-	if origPath == "" {
-		origPath = path
-	}
+
 	if runtime.GOOS == "windows" {
-		os.Setenv("PATH", pathToAdd+";"+path)
+		SetEnv("PATH", pathToAdd+";"+path)
 	} else {
-		os.Setenv("PATH", pathToAdd+":"+path)
+		SetEnv("PATH", pathToAdd+":"+path)
 	}
 }
 
-func RestorePath() {
-	if origPath != "" {
-		os.Setenv("PATH", origPath)
+func RestoreEnv() {
+	for key, value := range origEnv {
+		if value == "" {
+			os.Unsetenv(key)
+		} else {
+			os.Setenv(key, value)
+		}
 	}
+}
+
+func SetEnv(key string, value string) {
+	if origEnv == nil {
+		origEnv = make(map[string]string)
+	}
+	if _, ok := origEnv[key]; !ok {
+		origEnv[key] = os.Getenv(key)
+	}
+	os.Setenv(key, value)
 }

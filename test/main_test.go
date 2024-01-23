@@ -49,6 +49,6 @@ func Benchmark_Main(b *testing.B) {
 			b.Fail()
 			return
 		}
-        util.RestorePath()
+        util.RestoreEnv()
 	}
 }

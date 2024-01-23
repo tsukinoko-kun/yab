@@ -23,7 +23,12 @@ func useGo(version string) error {
 
 	defer func() {
 		util.AddToPath(filepath.Join(p, "go", "bin"))
-		os.Setenv("GOPATH", filepath.Join(p, "go"))
+		util.SetEnv("GOROOT", filepath.Join(p, "go"))
+		if projectCachePath, err := cache.ProjCachePath(); err == nil {
+			util.SetEnv("GOPATH", filepath.Join(projectCachePath, "goworkspace"))
+		} else {
+			log.Warn("Error setting GOPATH", "error", err)
+		}
 	}()
 
 	if ok, err := cache.LookupInstall("go", version); err == nil {
