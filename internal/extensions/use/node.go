@@ -55,7 +55,7 @@ func useNode(version string) error {
 			util.AddToPath(filepath.Join(nodeModulesPath, ".bin"))
 		}
 		nodeModulesPath := filepath.Join(p, "node_modules")
-		os.Setenv("NODE_PATH", nodeModulesPath)
+		util.SetEnv("NODE_PATH", nodeModulesPath)
 		util.AddToPath(filepath.Join(nodeModulesPath, ".bin"))
 	}()
 

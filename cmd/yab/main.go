@@ -14,7 +14,7 @@ func main() {
 
 	log.SetLevel(log.WarnLevel)
 
-	defer util.RestorePath()
+	defer util.RestoreEnv()
 
 	if util.ConfigPath, err = mainutil.GetConfigPath(); err != nil {
 		log.Fatal(err)

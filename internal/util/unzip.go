@@ -71,6 +71,10 @@ func unzip(archPath string, outPath string) error {
 
 		p := filepath.Join(outPath, f.Name)
 
+		if !IsInDir(p, outPath) {
+			return fmt.Errorf("File '%s' is attempting to write outside of target directory", f.Name)
+		}
+
 		if err := os.MkdirAll(filepath.Dir(p), 0777); err != nil {
 			return errors.Join(
 				fmt.Errorf("Error creating directory '%s'", filepath.Dir(p)),
@@ -81,6 +85,13 @@ func unzip(archPath string, outPath string) error {
 		if f.FileInfo().IsDir() {
 			continue
 		}
+
+		if f.Mode()&os.ModeSymlink != 0 {
+			log.Error("Symlinks are not supported", "path", p, "archive", archPath)
+			continue
+		}
+
+		log.Debug("Creating file", "path", p)
 
 		file, err := os.OpenFile(p, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode()|0666)
 		if err != nil {
@@ -122,6 +133,10 @@ func untar(tarStream io.Reader, outPath string) error {
 		}
 
 		p := filepath.Join(outPath, header.Name)
+
+		if !IsInDir(p, outPath) {
+			return fmt.Errorf("File '%s' is attempting to write outside of target directory", header.Name)
+		}
 
 		switch header.Typeflag {
 		case tar.TypeDir:
@@ -169,6 +184,19 @@ func untar(tarStream io.Reader, outPath string) error {
 			if err := os.Symlink(header.Linkname, p); err != nil {
 				return errors.Join(
 					fmt.Errorf("Error creating symlink '%s'", p),
+					err,
+				)
+			}
+		case tar.TypeLink:
+			if err := os.MkdirAll(filepath.Dir(p), 0777); err != nil {
+				return errors.Join(
+					fmt.Errorf("Error creating directory '%s'", filepath.Dir(p)),
+					err,
+				)
+			}
+			if err := os.Link(header.Linkname, p); err != nil {
+				return errors.Join(
+					fmt.Errorf("Error creating hardlink '%s'", p),
 					err,
 				)
 			}
