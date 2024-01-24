@@ -33,6 +33,7 @@ func useGo(version string) error {
 
 	if ok, err := cache.LookupInstall("go", version); err == nil {
 		if ok {
+			log.Debug("Go version already installed", "version", version)
 			return nil
 		}
 	} else {
