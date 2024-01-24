@@ -163,6 +163,7 @@ func useWingw(version string) error {
 		}
 		util.AddToPath(filepath.Join(mingw32path, "bin"))
 		util.AddToPath(filepath.Join(path, "bin"))
+		util.SetEnv("CGO_ENABLED", "1")
 		util.SetEnv("GCC_EXEC_PREFIX", filepath.Join(mingw32path, "lib", "gcc"))
 		util.SetEnv("CPATH", filepath.Join(mingw32path, "include"))
 		util.PushEnv("CPATH", filepath.Join(path, "include"))
