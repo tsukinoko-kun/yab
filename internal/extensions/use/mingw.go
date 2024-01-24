@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/fs"
 	"net/http"
 	"os"
 	posixpath "path"
@@ -174,12 +175,11 @@ func useMingw(version string) error {
 		util.PushEnv("C_INCLUDE_PATH", filepath.Join(path, "include"))
 		util.SetEnv("CPLUS_INCLUDE_PATH", filepath.Join(mingw32path, "include"))
 		util.PushEnv("CPLUS_INCLUDE_PATH", filepath.Join(path, "include"))
-		// loop items in mingw32path and set as LD_LIBRARY_PATH
-		if err := filepath.Walk(mingw32path, func(path string, info os.FileInfo, err error) error {
+		if err := filepath.WalkDir(mingw32path, func(path string, d fs.DirEntry, err error) error {
 			if err != nil {
 				return err
 			}
-			if info.IsDir() {
+			if d.IsDir() {
 				util.AddToPath(path)
 				util.PushEnv("LD_LIBRARY_PATH", path)
 			}

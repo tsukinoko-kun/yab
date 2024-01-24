@@ -18,12 +18,14 @@ func PushEnv(key string, pathToAdd string) {
 		return
 	}
 
-	path := os.Getenv(key)
-
-	if runtime.GOOS == "windows" {
-		SetEnv(key, pathToAdd+";"+path)
+	if path, ok := os.LookupEnv(key); ok {
+        if runtime.GOOS == "windows" {
+            SetEnv(key, pathToAdd+";"+path)
+        } else {
+            SetEnv(key, pathToAdd+":"+path)
+        }
 	} else {
-		SetEnv(key, pathToAdd+":"+path)
+        SetEnv(key, pathToAdd)
 	}
 }
 
