@@ -151,13 +151,16 @@ func useMingw(version string) error {
 	defer func() {
 		var path string
 		var mingw32path string
+		var libexecpath string
 		switch runtime.GOARCH {
 		case "386":
 			path = filepath.Join(p, "mingw32")
 			mingw32path = filepath.Join(path, "i686-w64-mingw32")
+			libexecpath = filepath.Join(path, "libexec", "gcc", "i686-w64-mingw32")
 		case "amd64":
 			path = filepath.Join(p, "mingw64")
 			mingw32path = filepath.Join(path, "x86_64-w64-mingw32")
+			libexecpath = filepath.Join(path, "libexec", "gcc", "x86_64-w64-mingw32")
 		default:
 			log.Error("Unsupported architecture", "architecture", runtime.GOARCH)
 		}
@@ -174,7 +177,7 @@ func useMingw(version string) error {
 		util.PushEnv("C_INCLUDE_PATH", filepath.Join(path, "include"))
 		util.SetEnv("CPLUS_INCLUDE_PATH", filepath.Join(mingw32path, "include"))
 		util.PushEnv("CPLUS_INCLUDE_PATH", filepath.Join(path, "include"))
-		dirEntry, _ := os.ReadDir(mingw32path)
+		dirEntry, _ := os.ReadDir(libexecpath)
 		for _, entry := range dirEntry {
 			if !entry.IsDir() {
 				continue
