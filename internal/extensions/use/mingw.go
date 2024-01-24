@@ -17,21 +17,21 @@ import (
 	"github.com/charmbracelet/log"
 )
 
-// wingwLatest returns the latest wingw version from github api
-func wingwLatest() (string, error) {
+// mingwLatest returns the latest mingw version from github api
+func mingwLatest() (string, error) {
 	resp, err := http.Get("https://api.github.com/repos/brechtsanders/winlibs_mingw/releases/latest")
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to request latest wingw version"), err)
+		return "", errors.Join(fmt.Errorf("Failed to request latest mingw version"), err)
 	}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to read response body for latest wingw version"), err)
+		return "", errors.Join(fmt.Errorf("Failed to read response body for latest mingw version"), err)
 	}
 	var result map[string]any
 	err = json.Unmarshal([]byte(body), &result)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to unmarshal response body for latest wingw version"), err)
+		return "", errors.Join(fmt.Errorf("Failed to unmarshal response body for latest mingw version"), err)
 	}
 	if tagName, ok := result["tag_name"]; ok {
 		return tagName.(string), nil
@@ -39,24 +39,24 @@ func wingwLatest() (string, error) {
 	if message, ok := result["message"]; ok {
 		return "", errors.New(message.(string))
 	}
-	return "", errors.New("Failed to read latest wingw version from github api response")
+	return "", errors.New("Failed to read latest mingw version from github api response")
 }
 
-// wingwTagAssets returns the assets url for the given tag from github api
-func wingwTagAssets(tag string) (string, error) {
+// mingwTagAssets returns the assets url for the given tag from github api
+func mingwTagAssets(tag string) (string, error) {
 	resp, err := http.Get("https://api.github.com/repos/brechtsanders/winlibs_mingw/releases/tags/" + tag)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to request wingw version '%s'", tag), err)
+		return "", errors.Join(fmt.Errorf("Failed to request mingw version '%s'", tag), err)
 	}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to read response body for wingw version '%s'", tag), err)
+		return "", errors.Join(fmt.Errorf("Failed to read response body for mingw version '%s'", tag), err)
 	}
 	var result map[string]any
 	err = json.Unmarshal([]byte(body), &result)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to unmarshal response body for wingw version '%s'", tag), err)
+		return "", errors.Join(fmt.Errorf("Failed to unmarshal response body for mingw version '%s'", tag), err)
 	}
 	if assetsUrl, ok := result["assets_url"]; ok {
 		return assetsUrl.(string), nil
@@ -67,25 +67,25 @@ func wingwTagAssets(tag string) (string, error) {
 	return "", errors.New("Failed to read assets url from github api response")
 }
 
-// wingwFindAsset returns the url of the asset with the given tag for the current architecture
-func wingwFindAsset(tag string) (string, error) {
-	assetsUrl, err := wingwTagAssets(tag)
+// mingwFindAsset returns the url of the asset with the given tag for the current architecture
+func mingwFindAsset(tag string) (string, error) {
+	assetsUrl, err := mingwTagAssets(tag)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to get assets url for wingw version '%s'", tag), err)
+		return "", errors.Join(fmt.Errorf("Failed to get assets url for mingw version '%s'", tag), err)
 	}
 	resp, err := http.Get(assetsUrl)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to request assets url for wingw version '%s'", tag), err)
+		return "", errors.Join(fmt.Errorf("Failed to request assets url for mingw version '%s'", tag), err)
 	}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to read response body for assets url for wingw version '%s'", tag), err)
+		return "", errors.Join(fmt.Errorf("Failed to read response body for assets url for mingw version '%s'", tag), err)
 	}
 	var result []map[string]any
 	err = json.Unmarshal([]byte(body), &result)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to unmarshal response body for assets url for wingw version '%s'", tag), err)
+		return "", errors.Join(fmt.Errorf("Failed to unmarshal response body for assets url for mingw version '%s'", tag), err)
 	}
 	var arch string
 	switch runtime.GOARCH {
@@ -118,26 +118,26 @@ func wingwFindAsset(tag string) (string, error) {
 			}
 		}
 	}
-	return "", fmt.Errorf("Failed to find asset for wingw version '%s'", tag)
+	return "", fmt.Errorf("Failed to find asset for mingw version '%s'", tag)
 }
 
-func useWingw(version string) error {
+func useMingw(version string) error {
 	if runtime.GOOS != "windows" {
-		log.Warn("Not on windows, not installing wingw")
+		log.Warn("Not on windows, not installing mingw")
 		return nil
 	}
 
 	if version == "latest" {
-		log.Debug("Getting latest wingw version")
+		log.Debug("Getting latest mingw version")
 		var err error
-		version, err = wingwLatest()
+		version, err = mingwLatest()
 		if err != nil {
 			return errors.Join(
-				fmt.Errorf("Error getting latest wingw version"),
+				fmt.Errorf("Error getting latest mingw version"),
 				err,
 			)
 		}
-		log.Warnf(`Latest wingw version is '%s' you should use this version with 'yab.use("wingw", "%s")'`, version, version)
+		log.Warnf(`Latest mingw version is '%s' you should use this version with 'yab.use("mingw", "%s")'`, version, version)
 	}
 
 	p, err := cache.InstallPath("mingw", version)
@@ -167,13 +167,26 @@ func useWingw(version string) error {
 		util.SetEnv("MINGW_HOME", path)
 		util.SetEnv("CC", filepath.Join(path, "bin", "gcc.exe"))
 		util.SetEnv("CXX", filepath.Join(path, "bin", "g++.exe"))
-		util.SetEnv("GCC_EXEC_PREFIX", filepath.Join(mingw32path, "lib", "gcc"))
+		util.SetEnv("GCC_EXEC_PREFIX", filepath.Join(path, "lib", "gcc"))
 		util.SetEnv("CPATH", filepath.Join(mingw32path, "include"))
 		util.PushEnv("CPATH", filepath.Join(path, "include"))
 		util.SetEnv("C_INCLUDE_PATH", filepath.Join(mingw32path, "include"))
 		util.PushEnv("C_INCLUDE_PATH", filepath.Join(path, "include"))
 		util.SetEnv("CPLUS_INCLUDE_PATH", filepath.Join(mingw32path, "include"))
 		util.PushEnv("CPLUS_INCLUDE_PATH", filepath.Join(path, "include"))
+		// loop items in mingw32path and set as LD_LIBRARY_PATH
+		if err := filepath.Walk(mingw32path, func(path string, info os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
+			if info.IsDir() {
+				util.AddToPath(path)
+				util.PushEnv("LD_LIBRARY_PATH", path)
+			}
+			return nil
+		}); err != nil {
+			log.Error("Error walking path", "path", mingw32path)
+		}
 		util.SetEnv("LIBRARY_PATH", filepath.Join(path, "lib")+":"+filepath.Join(mingw32path, "lib"))
 	}()
 
@@ -191,10 +204,10 @@ func useWingw(version string) error {
 
 	log.Info("Installing dependency", "package", "mingw", "version", version)
 
-	assetUrl, err := wingwFindAsset(version)
+	assetUrl, err := mingwFindAsset(version)
 	if err != nil {
 		return errors.Join(
-			fmt.Errorf("Error getting assets url for wingw version '%s'", version),
+			fmt.Errorf("Error getting assets url for mingw version '%s'", version),
 			err,
 		)
 	}
@@ -205,7 +218,7 @@ func useWingw(version string) error {
 	resp, err := http.Get(assetUrl)
 	if err != nil {
 		return errors.Join(
-			fmt.Errorf("Error downloading wingw version '%s'", version),
+			fmt.Errorf("Error downloading mingw version '%s'", version),
 			err,
 		)
 	}
@@ -214,7 +227,7 @@ func useWingw(version string) error {
 	f, err := os.Create(filepath)
 	if err != nil {
 		return errors.Join(
-			fmt.Errorf("Error creating wingw version '%s'", version),
+			fmt.Errorf("Error creating mingw version '%s'", version),
 			err,
 		)
 	}
@@ -223,7 +236,7 @@ func useWingw(version string) error {
 	_, err = io.Copy(f, resp.Body)
 	if err != nil {
 		return errors.Join(
-			fmt.Errorf("Error writing wingw version '%s'", version),
+			fmt.Errorf("Error writing mingw version '%s'", version),
 			err,
 		)
 	}
