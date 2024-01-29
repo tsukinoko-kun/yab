@@ -180,15 +180,6 @@ yab.task(yab.find("**.go"), bin_name, function()
 end)
 ```
 
-## GitHub Actions :octocat:
-
-Install the latest version (build from main Branch)
-
-```yaml
-- name: Setup Yab
-  uses: Frank-Mayer/yab-setup@v1.0.0
-```
-
 ## Badge
 
 [![Yab Project](https://img.shields.io/badge/Yab_Project-2C2D72?logo=lua)](https://github.com/Frank-Mayer/yab)
