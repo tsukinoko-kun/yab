@@ -1,4 +1,4 @@
-# Documentation v0.1.0
+# Documentation v0.1.1
 
 ## Usage
 
@@ -100,6 +100,16 @@ end)
 **Parameters:** None
 
 **Returns:** A table containing the command line arguments.
+
+### 𝑓 cd
+
+*Changes the current working directory to the given path for one function call.*
+
+**Parameters:** 
+* path `string`
+* fn `function`
+
+**Returns:** None
 
 ### 𝑓 check_exec
 

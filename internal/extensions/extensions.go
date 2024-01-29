@@ -6,6 +6,7 @@ import (
 	"github.com/Frank-Mayer/gopher-lua"
 	"github.com/Frank-Mayer/yab/internal/extensions/args"
 	"github.com/Frank-Mayer/yab/internal/extensions/block"
+	"github.com/Frank-Mayer/yab/internal/extensions/cd"
 	"github.com/Frank-Mayer/yab/internal/extensions/checkexec"
 	"github.com/Frank-Mayer/yab/internal/extensions/download"
 	"github.com/Frank-Mayer/yab/internal/extensions/fileinfo"
@@ -90,6 +91,16 @@ var Functions = []Function{
 		[]string{"A table containing the command line arguments."},
 		args.Args,
 		"table",
+		"",
+	},
+
+	{
+		"cd",
+		"Changes the current working directory to the given path for one function call.",
+		[]string{"path string", "fn function"},
+		[]string{},
+		cd.Cd,
+		"",
 		"",
 	},
 

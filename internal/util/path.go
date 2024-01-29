@@ -5,28 +5,46 @@ import (
 	"runtime"
 )
 
-var origPath string
+var origEnv map[string]string
 
 func AddToPath(pathToAdd string) {
+	PushEnv("PATH", pathToAdd)
+}
+
+func PushEnv(key string, pathToAdd string) {
 	// check if pathToAdd exists
 	_, err := os.Stat(pathToAdd)
 	if err != nil {
 		return
 	}
 
-	path := os.Getenv("PATH")
-	if origPath == "" {
-		origPath = path
-	}
-	if runtime.GOOS == "windows" {
-		os.Setenv("PATH", pathToAdd+";"+path)
+	if path, ok := os.LookupEnv(key); ok {
+        if runtime.GOOS == "windows" {
+            SetEnv(key, pathToAdd+";"+path)
+        } else {
+            SetEnv(key, pathToAdd+":"+path)
+        }
 	} else {
-		os.Setenv("PATH", pathToAdd+":"+path)
+        SetEnv(key, pathToAdd)
 	}
 }
 
-func RestorePath() {
-	if origPath != "" {
-		os.Setenv("PATH", origPath)
+func RestoreEnv() {
+	for key, value := range origEnv {
+		if value == "" {
+			os.Unsetenv(key)
+		} else {
+			os.Setenv(key, value)
+		}
 	}
+}
+
+func SetEnv(key string, value string) {
+	if origEnv == nil {
+		origEnv = make(map[string]string)
+	}
+	if _, ok := origEnv[key]; !ok {
+		origEnv[key] = os.Getenv(key)
+	}
+	os.Setenv(key, value)
 }

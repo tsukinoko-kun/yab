@@ -55,12 +55,13 @@ func useNode(version string) error {
 			util.AddToPath(filepath.Join(nodeModulesPath, ".bin"))
 		}
 		nodeModulesPath := filepath.Join(p, "node_modules")
-		os.Setenv("NODE_PATH", nodeModulesPath)
+		util.SetEnv("NODE_PATH", nodeModulesPath)
 		util.AddToPath(filepath.Join(nodeModulesPath, ".bin"))
 	}()
 
 	if ok, err := cache.LookupInstall("node", version); err == nil {
 		if ok {
+			log.Debug("Node version already installed", "version", version)
 			return nil
 		}
 	} else {
