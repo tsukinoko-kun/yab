@@ -8,18 +8,24 @@ import (
 var origEnv map[string]string
 
 func AddToPath(pathToAdd string) {
+	PushEnv("PATH", pathToAdd)
+}
+
+func PushEnv(key string, pathToAdd string) {
 	// check if pathToAdd exists
 	_, err := os.Stat(pathToAdd)
 	if err != nil {
 		return
 	}
 
-	path := os.Getenv("PATH")
-
-	if runtime.GOOS == "windows" {
-		SetEnv("PATH", pathToAdd+";"+path)
+	if path, ok := os.LookupEnv(key); ok {
+        if runtime.GOOS == "windows" {
+            SetEnv(key, pathToAdd+";"+path)
+        } else {
+            SetEnv(key, pathToAdd+":"+path)
+        }
 	} else {
-		SetEnv("PATH", pathToAdd+":"+path)
+        SetEnv(key, pathToAdd)
 	}
 }
 

@@ -61,6 +61,7 @@ func useNode(version string) error {
 
 	if ok, err := cache.LookupInstall("node", version); err == nil {
 		if ok {
+			log.Debug("Node version already installed", "version", version)
 			return nil
 		}
 	} else {
