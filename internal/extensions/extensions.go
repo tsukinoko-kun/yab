@@ -12,9 +12,11 @@ import (
 	"github.com/Frank-Mayer/yab/internal/extensions/fileinfo"
 	"github.com/Frank-Mayer/yab/internal/extensions/find"
 	"github.com/Frank-Mayer/yab/internal/extensions/git"
+	"github.com/Frank-Mayer/yab/internal/extensions/mkdir"
 	"github.com/Frank-Mayer/yab/internal/extensions/osarch"
 	"github.com/Frank-Mayer/yab/internal/extensions/ostype"
 	"github.com/Frank-Mayer/yab/internal/extensions/pretty"
+	"github.com/Frank-Mayer/yab/internal/extensions/rm"
 	"github.com/Frank-Mayer/yab/internal/extensions/std"
 	"github.com/Frank-Mayer/yab/internal/extensions/task"
 	"github.com/Frank-Mayer/yab/internal/extensions/use"
@@ -102,6 +104,35 @@ var Functions = []Function{
 		cd.Cd,
 		"",
 		"",
+	},
+
+	{
+		"mkdir",
+		"Creates a new directory.",
+		[]string{"path string"},
+		[]string{},
+		mkdir.Mkdir,
+		"",
+		"yab.mkdir('foo')",
+	},
+
+	{
+		"rm",
+		"Removes a file or directory.",
+		[]string{"path string"},
+		[]string{},
+		rm.Rm,
+		"",
+		"yab.rm(\"./foo/bar\")",
+	},
+	{
+		"rm",
+		"Removes a file or directory.",
+		[]string{"path string", "recursive boolean"},
+		[]string{},
+		rm.Rm,
+		"",
+		"yab.rm(\"./foo/bar\", true)",
 	},
 
 	{

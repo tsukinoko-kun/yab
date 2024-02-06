@@ -1,4 +1,4 @@
-# Documentation v0.1.1
+# Documentation v0.1.2
 
 ## Usage
 
@@ -40,10 +40,10 @@ Prints the yab environment.
 
 ### 𝑓 use
 
-*Makes the specified package available for use in the script. Currently supported packages are: golang, nodejs.*
+*Makes the specified package available for use in the script. Currently supported packages are: golang, nodejs, mingw.*
 
 **Parameters:** 
-* package `'golang'|'nodejs'`
+* package `'golang'|'nodejs'|'mingw'`
 * version `string`
 
 **Returns:** None
@@ -110,6 +110,52 @@ end)
 * fn `function`
 
 **Returns:** None
+
+### 𝑓 mkdir
+
+*Creates a new directory.*
+
+**Parameters:** 
+* path `string`
+
+**Returns:** None
+
+**Example:**
+
+```lua
+yab.mkdir('foo')
+```
+
+### 𝑓 rm
+
+*Removes a file or directory.*
+
+**Parameters:** 
+* path `string`
+
+**Returns:** None
+
+**Example:**
+
+```lua
+yab.rm("./foo/bar")
+```
+
+### 𝑓 rm
+
+*Removes a file or directory.*
+
+**Parameters:** 
+* path `string`
+* recursive `boolean`
+
+**Returns:** None
+
+**Example:**
+
+```lua
+yab.rm("./foo/bar", true)
+```
 
 ### 𝑓 check_exec
 
