@@ -3,7 +3,7 @@ package rm
 import (
 	"os"
 
-	lua "github.com/Frank-Mayer/gopher-lua"
+	lua "github.com/Frank-Mayer/yab/internal/lua"
 )
 
 func Rm(l *lua.LState) int {

@@ -3,7 +3,7 @@ package mkdir
 import (
 	"os"
 
-	lua "github.com/Frank-Mayer/gopher-lua"
+	lua "github.com/Frank-Mayer/yab/internal/lua"
 )
 
 func Mkdir(l *lua.LState) int {

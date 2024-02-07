@@ -3,7 +3,7 @@ package osarch
 import (
 	"runtime"
 
-	"github.com/Frank-Mayer/gopher-lua"
+	"github.com/Frank-Mayer/yab/internal/lua"
 )
 
 func OsArch(l *lua.LState) int {
