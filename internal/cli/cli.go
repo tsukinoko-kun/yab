@@ -41,7 +41,21 @@ const (
 	__ls = 0xf1e7f19e
 )
 
-func (c *Cli) Parse() {
+func (c *Cli) Parse() error {
+	// attach loop
+	for i := 0; i < len(os.Args); {
+		if os.Args[i] == "--attach" {
+			if len(os.Args) <= i+1 {
+				return fmt.Errorf("No argument provided for --attach")
+			}
+			attach := os.Args[i+1]
+			// remove the --attach and the argument
+			os.Args = append(os.Args[:i], os.Args[i+2:]...)
+			mainutil.Attach(attach)
+		} else {
+			i++
+		}
+	}
 argLoop:
 	for i, arg := range os.Args[1:] {
 		switch hash.HashString32(arg) {
@@ -67,4 +81,6 @@ argLoop:
 			c.Configs = append(c.Configs, arg)
 		}
 	}
+
+	return nil
 }

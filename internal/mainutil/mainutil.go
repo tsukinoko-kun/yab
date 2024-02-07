@@ -192,3 +192,15 @@ func ListConfigs() {
 
 	os.Stdout.WriteString(strings.Join(out, ";"))
 }
+
+var attached = make([]string, 0)
+
+func Attach(cmd string) {
+	attached = append(attached, cmd)
+}
+func GetAttached() []string {
+	return attached
+}
+func ClearAttached() {
+	attached = make([]string, 0)
+}
