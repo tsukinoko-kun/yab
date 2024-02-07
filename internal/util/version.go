@@ -1,3 +1,5 @@
 package util
 
-const Version = "0.1.3"
+import "github.com/Frank-Mayer/yab"
+
+const Version = yab.PackageVersion

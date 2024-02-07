@@ -1,6 +1,6 @@
 module github.com/Frank-Mayer/yab
 
-go 1.21.6
+go 1.22
 
 require (
 	fyne.io/fyne/v2 v2.4.3
