@@ -179,6 +179,8 @@ func unxz(p string, outPath string) error {
 	// is GNU tar available?
 	if tar, err := exec.LookPath("tar"); err == nil {
 		cmd := exec.Command(tar, "-xJf", p, "-C", outPath)
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
 		if err := cmd.Run(); err != nil {
 			return err
 		}

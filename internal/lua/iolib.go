@@ -8,6 +8,8 @@ import (
 	"os"
 	"os/exec"
 	"syscall"
+
+	"github.com/Frank-Mayer/yab/internal/util"
 )
 
 var ioFuncs = map[string]LGFunction{
@@ -85,7 +87,7 @@ func newFile(L *LState, file *os.File, path string, flag int, perm os.FileMode, 
 
 func newProcess(L *LState, cmd string, writable, readable bool) (*LUserData, error) {
 	ud := L.NewUserData()
-	c, args := popenArgs(cmd)
+	c, args := util.PopenArgs(cmd)
 	pp := exec.Command(c, args...)
 	lfile := &lFile{fp: nil, pp: pp, writer: nil, reader: nil, stdout: nil, closed: false}
 	ud.Value = lfile

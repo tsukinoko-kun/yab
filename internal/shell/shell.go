@@ -2,9 +2,9 @@ package shell
 
 import "os/exec"
 
-var shell func(string) error = nil
+var shell func(string) *exec.Cmd = nil
 
-func SetShell(f func(string) error) {
+func SetShell(f func(string) *exec.Cmd) {
 	shell = f
 }
 
@@ -12,10 +12,22 @@ func UseSell(command string) (bool, error, int) {
 	if shell == nil {
 		return false, nil, 0
 	}
-	err := shell(command)
-	if exitError, ok := err.(*exec.ExitError); ok {
-		exitCode := exitError.ExitCode()
-		return true, err, exitCode
+	cmd := shell(command)
+	err := cmd.Run()
+	if err != nil {
+		if exitError, ok := err.(*exec.ExitError); ok {
+			return true, nil, exitError.ExitCode()
+		} else {
+			return true, err, 1
+		}
+	} else {
+		return true, nil, 0
 	}
-	return true, err, 0
+}
+
+func GetShell() (func(string) *exec.Cmd, bool) {
+	if shell == nil {
+		return nil, false
+	}
+	return shell, true
 }

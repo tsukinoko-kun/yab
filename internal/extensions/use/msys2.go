@@ -32,26 +32,17 @@ func useMsys2(version string) error {
 
 		msys2Loc := filepath.Join(p, "msys64", "msys2_shell.cmd")
 		log.Debug("Now using msys2 shell", "location", msys2Loc)
-		shell.SetShell(func(c string) error {
+		shell.SetShell(func(c string) *exec.Cmd {
 			log.Debug("Running msys2 shell", "command", c)
 			if wd, err := os.Getwd(); err == nil {
 				util.SetEnv("__CD__", wd)
 			} else {
 				log.Warn("Error getting current working directory", "error", err)
 			}
-			// add the posix path to the msys2 shell
-			p := WinToPosixPath(util.UsedPath)
-			log.Debug("Setting PATH for msys2 shell", "path", p)
-			c = fmt.Sprintf("export PATH=\"$PATH:%s\";%s", p, c)
-			log.Debug("Running msys2 shell", "command", c)
-			cmd := exec.Command(msys2Loc, "-defterm", "-no-start", "-here", "-c", c)
-			cmd.Stdout = os.Stdout
-			cmd.Stderr = os.Stderr
-			cmd.Stdin = os.Stdin
-			if err := cmd.Run(); err != nil {
-				return errors.Wrap(err, fmt.Sprintf("Error starting msys2 shell '%s'", msys2Loc))
-			}
-			return nil
+			cmd := exec.Command(msys2Loc,
+				"-defterm", "-no-start", "-here",
+				"-c", fmt.Sprintf("export PATH=\"$PATH:%s\";%s", WinToPosixPath(util.UsedPath), c))
+			return cmd
 		})
 	}()
 
@@ -102,6 +93,7 @@ func useMsys2(version string) error {
 				cmd := exec.Command(fp)
 				cmd.Stdout = os.Stdout
 				cmd.Stderr = os.Stderr
+				cmd.Stdin = os.Stdin
 				if err := cmd.Run(); err != nil {
 					return errors.Wrap(err, fmt.Sprintf("Error running msys2 installer '%s'", fp))
 				}

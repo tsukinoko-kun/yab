@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/Frank-Mayer/yab/internal/shell"
-	"github.com/charmbracelet/log"
+	"github.com/Frank-Mayer/yab/internal/util"
 )
 
 var startedAt time.Time
@@ -89,10 +89,9 @@ func osExecute(L *LState) int {
 		L.Push(LNumber(exitCode))
 		return 1
 	}
-	log.Debug("system shell", "cmd", cmdStr)
 	var procAttr os.ProcAttr
 	procAttr.Files = []*os.File{os.Stdin, os.Stdout, os.Stderr}
-	cmd, args := popenArgs(cmdStr)
+	cmd, args := util.PopenArgs(cmdStr)
 	args = append([]string{cmd}, args...)
 	process, err := os.StartProcess(cmd, args, &procAttr)
 	if err != nil {

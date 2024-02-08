@@ -204,6 +204,8 @@ func addUnixPath(p string) error {
 func addWindowsPath(directory string) error {
 	currentPath := os.Getenv("PATH")
 	cmd := exec.Command("reg", "add", "HKCU\\Environment", "/v", "Path", "/t", "REG_SZ", "/d", directory+";"+currentPath, "/f")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err != nil {
 		return errors.Wrap(err, "could not add path to shell")
@@ -251,6 +253,7 @@ func exe(bin string, args ...string) error {
 	cmd := exec.Command(bin, args...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
 	return cmd.Run()
 }
 
