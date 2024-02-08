@@ -236,8 +236,11 @@ func (sc *Scanner) scanEscape(buf *bytes.Buffer) error {
 			for i := 0; i < 2 && isDecimal(sc.Peek()); i++ {
 				bytes = append(bytes, byte(sc.Next()))
 			}
-			val, _ := strconv.ParseInt(string(bytes), 10, 32)
-			writeChar(buf, int(val))
+			val, err := strconv.ParseUint(string(bytes), 10, 8)
+			if err != nil {
+				return sc.Error(string(bytes), "invalid escape sequence")
+			}
+			buf.WriteByte(byte(val))
 		} else {
 			writeChar(buf, ch)
 		}
