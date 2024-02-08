@@ -38,7 +38,11 @@ func useMsys2(version string) error {
 			} else {
 				log.Warn("Error getting current working directory", "error", err)
 			}
-			cmd := exec.Command(msys2Loc, "-defterm", "-no-start", "-here", "-c", c)
+			path := os.Getenv("PATH")
+			posixPath := strings.Join(strings.Split(path, ";"), ":")
+			// add the posixPath to the msys2 shell
+			cmd := exec.Command(msys2Loc, "-defterm", "-no-start", "-here", "-c",
+				fmt.Sprintf("export PATH=\"$PATH:%s\"; %s", posixPath, c))
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
 			cmd.Stdin = os.Stdin
