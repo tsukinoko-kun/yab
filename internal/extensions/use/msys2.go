@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	posixpath "path"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -129,9 +130,13 @@ func useMsys2(version string) error {
 func WinToPosixPath(path string) string {
 	parts := strings.Split(path, ";")
 	for i := 0; i < len(parts); i++ {
+		if len(parts[i]) <= 2 {
+			continue
+		}
 		parts[i] = strings.Replace(parts[i], "\\", "/", -1)
 		letter := strings.ToLower(parts[i][:1])
 		parts[i] = "/" + letter + parts[i][2:]
+		parts[i] = posixpath.Clean(parts[i])
 	}
 	return strings.Join(parts, ":")
 }
