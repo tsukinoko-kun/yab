@@ -142,7 +142,7 @@ func isArrayKey(v LNumber) bool {
 
 func parseNumber(number string) (LNumber, error) {
 	var value LNumber
-	number = strings.Trim(number, " \t\n")
+	number = strings.TrimSpace(number)
 	if v, err := strconv.ParseInt(number, 0, LNumberBit); err != nil {
 		if v2, err2 := strconv.ParseFloat(number, LNumberBit); err2 != nil {
 			return LNumber(0), err2
@@ -151,6 +151,10 @@ func parseNumber(number string) (LNumber, error) {
 		}
 	} else {
 		value = LNumber(v)
+		// check v value after float64 conversation
+		if int64(value) != v {
+			return value, fmt.Errorf("Integer '%d' is too large to represent as a float64", v)
+		}
 	}
 	return value, nil
 }
