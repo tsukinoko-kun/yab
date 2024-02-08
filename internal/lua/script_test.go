@@ -63,6 +63,13 @@ func testScriptCompile(t *testing.T, script string) {
 }
 
 func testScriptDir(t *testing.T, tests []string, directory string) {
+	t.Logf("testing in %s", directory)
+	wd, _ := os.Getwd()
+	t.Logf("working dir: %s", wd)
+	if dirContent, _ := os.ReadDir(directory); dirContent == nil {
+		t.Logf("dirContent: %v", dirContent)
+	}
+
 	if err := os.Chdir(directory); err != nil {
 		t.Error(err)
 	}
