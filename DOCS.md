@@ -36,6 +36,10 @@ Creates definitions file in global config.
 
 Prints the yab environment.
 
+**yab [configs ...] --attach [command]**
+
+Attaches a command to the yab environment after running all given configs.
+
 ## Lua API Functions (in the `yab` module)
 
 ### 𝑓 use

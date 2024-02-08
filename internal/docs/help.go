@@ -52,6 +52,8 @@ func Markdown() string {
 	sb.WriteString("Creates definitions file in global config.\n\n")
 	sb.WriteString("**" + binName + " --env**\n\n")
 	sb.WriteString("Prints the yab environment.\n\n")
+	sb.WriteString("**" + binName + " [configs ...] --attach [command]**\n\n")
+	sb.WriteString("Attaches a command to the yab environment after running all given configs.\n\n")
 
 	sb.WriteString("## Lua API Functions (in the `yab` module)\n\n")
 	for _, f := range extensions.Functions {
