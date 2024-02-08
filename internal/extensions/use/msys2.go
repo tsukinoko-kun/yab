@@ -60,11 +60,31 @@ func useMsys2(version string) error {
 	}()
 
 	log.Debug("Running msys2 installer", "filepath", fp)
-	cmd := exec.Command(fp, "--quiet-mode", "--no-startmenu", "--no-desktop", "--root", p)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	if err := cmd.Run(); err != nil {
-		return errors.Wrap(err, fmt.Sprintf("Error running msys2 installer '%s'", fp))
+	if wd, err := os.Getwd(); err == nil {
+		if err := os.Chdir(p); err != nil {
+			err := func() error {
+				cmd := exec.Command(fp)
+				cmd.Stdout = os.Stdout
+				cmd.Stderr = os.Stderr
+				if err := cmd.Run(); err != nil {
+					return errors.Wrap(err, fmt.Sprintf("Error running msys2 installer '%s'", fp))
+				}
+				if err := cmd.Wait(); err != nil {
+					return errors.Wrap(err, fmt.Sprintf("Error waiting for msys2 installer '%s'", fp))
+				}
+				return nil
+			}()
+			if err := os.Chdir(wd); err != nil {
+				return errors.Wrap(err, fmt.Sprintf("Error changing directory to '%s'", wd))
+			}
+			if err != nil {
+				return errors.Wrap(err, fmt.Sprintf("Error changing directory to '%s'", p))
+			}
+		} else {
+			return errors.Wrap(err, fmt.Sprintf("Error changing directory to '%s'", p))
+		}
+	} else {
+		return errors.Wrap(err, "Error getting current working directory")
 	}
 
 	util.AddToPath(filepath.Join(p, "msys64"))
