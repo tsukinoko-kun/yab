@@ -6,8 +6,8 @@ import (
 )
 
 var (
-	origEnv map[string]string
-	UsedPath    string
+	origEnv  map[string]string
+	UsedPath string
 )
 
 func AddToPath(pathToAdd string) {
