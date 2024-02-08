@@ -26,6 +26,29 @@ func useMsys2(version string) error {
 		return errors.Wrap(err, fmt.Sprintf("Error getting install path for msys2 version '%s'", version))
 	}
 
+	defer func() {
+		util.AddToPath(filepath.Join(p, "msys64"))
+
+		msys2Loc := filepath.Join(p, "msys64", "msys2_shell.cmd")
+		log.Debug("Now using msys2 shell", "location", msys2Loc)
+		shell.SetShell(func(c string) error {
+			log.Debug("Running msys2 shell", "command", c)
+			if wd, err := os.Getwd(); err == nil {
+				util.SetEnv("__CD__", wd)
+			} else {
+				log.Warn("Error getting current working directory", "error", err)
+			}
+			cmd := exec.Command(msys2Loc, "-defterm", "-no-start", "-here", "-c", c)
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
+			cmd.Stdin = os.Stdin
+			if err := cmd.Run(); err != nil {
+				return errors.Wrap(err, fmt.Sprintf("Error starting msys2 shell '%s'", msys2Loc))
+			}
+			return nil
+		})
+	}()
+
 	if ok, err := cache.LookupInstall("msys2", version); err == nil {
 		if ok {
 			log.Debug("Msys2 version already installed", "version", version)
@@ -91,27 +114,6 @@ func useMsys2(version string) error {
 	} else {
 		return errors.Wrap(err, "Error getting current working directory")
 	}
-
-	util.AddToPath(filepath.Join(p, "msys64"))
-
-	msys2Loc := filepath.Join(p, "msys2_shell.cmd")
-	log.Debug("Now using msys2 shell", "location", msys2Loc)
-	shell.SetShell(func(c string) error {
-		log.Debug("Running msys2 shell", "command", c)
-		if wd, err := os.Getwd(); err == nil {
-			util.SetEnv("__CD__", wd)
-		} else {
-			log.Warn("Error getting current working directory", "error", err)
-		}
-		cmd := exec.Command(msys2Loc, "-defterm", "-no-start", "-here", "-c", c)
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-		cmd.Stdin = os.Stdin
-		if err := cmd.Run(); err != nil {
-			return errors.Wrap(err, fmt.Sprintf("Error starting msys2 shell '%s'", msys2Loc))
-		}
-		return nil
-	})
 
 	return nil
 }
