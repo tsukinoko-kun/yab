@@ -39,7 +39,7 @@ func useMsys2(version string) error {
 				log.Warn("Error getting current working directory", "error", err)
 			}
 			// add the posix path to the msys2 shell
-			p := posixPath(os.Getenv("PATH"))
+			p := WinToPosixPath(os.Getenv("PATH"))
 			log.Debug("Setting PATH for msys2 shell", "path", p)
 			c = fmt.Sprintf("export PATH=\"$PATH:%s\";%s", p, c)
 			log.Debug("Running msys2 shell", "command", c)
@@ -123,10 +123,15 @@ func useMsys2(version string) error {
 	return nil
 }
 
-func posixPath(path string) string {
+// WinToPosixPath converts a windows path environment variable to a posix path environment variable.
+// It replaces all backslashes with forward slashes and replaces the semicolon with a colon.
+// Drive letters are converted to lowercase. (e.g. "C:\Windows" becomes "/c/Windows")
+func WinToPosixPath(path string) string {
 	parts := strings.Split(path, ";")
 	for i := 0; i < len(parts); i++ {
 		parts[i] = strings.Replace(parts[i], "\\", "/", -1)
+		letter := strings.ToLower(parts[i][:1])
+		parts[i] = "/" + letter + parts[i][2:]
 	}
 	return strings.Join(parts, ":")
 }
