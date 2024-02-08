@@ -16,6 +16,11 @@ import (
 )
 
 func useMsys2(version string) error {
+	if runtime.GOOS != "windows" {
+		log.Warn("Not on windows, msys2 installation skipped")
+		return nil
+	}
+
 	p, err := cache.InstallPath("msys2", version)
 	if err != nil {
 		return errors.Wrap(err, fmt.Sprintf("Error getting install path for msys2 version '%s'", version))
@@ -69,9 +74,6 @@ func useMsys2(version string) error {
 				if err := cmd.Run(); err != nil {
 					return errors.Wrap(err, fmt.Sprintf("Error running msys2 installer '%s'", fp))
 				}
-				if err := cmd.Wait(); err != nil {
-					return errors.Wrap(err, fmt.Sprintf("Error waiting for msys2 installer '%s'", fp))
-				}
 				return nil
 			}()
 			if err := os.Chdir(wd); err != nil {
@@ -102,11 +104,8 @@ func useMsys2(version string) error {
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		cmd.Stdin = os.Stdin
-		if err := cmd.Start(); err != nil {
+		if err := cmd.Run(); err != nil {
 			return errors.Wrap(err, fmt.Sprintf("Error starting msys2 shell '%s'", msys2Loc))
-		}
-		if err := cmd.Wait(); err != nil {
-			return errors.Wrap(err, fmt.Sprintf("Error waiting for msys2 shell '%s'", msys2Loc))
 		}
 		return nil
 	})

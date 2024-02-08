@@ -1,4 +1,4 @@
-# Documentation v0.1.2
+# Documentation v0.1.3
 
 ## Usage
 
@@ -40,10 +40,10 @@ Prints the yab environment.
 
 ### 𝑓 use
 
-*Makes the specified package available for use in the script. Currently supported packages are: golang, nodejs, mingw.*
+*Makes the specified package available for use in the script. Currently supported packages are: golang, nodejs, mingw, msys2.*
 
 **Parameters:** 
-* package `'golang'|'nodejs'|'mingw'`
+* package `'golang'|'nodejs'|'mingw'|'msys2'`
 * version `string`
 
 **Returns:** None
