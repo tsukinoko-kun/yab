@@ -90,9 +90,13 @@ func useMsys2(version string) error {
 	util.AddToPath(filepath.Join(p, "msys64"))
 
 	msys2Loc := filepath.Join(p, "msys2_shell.cmd")
+	log.Debug("Now using msys2 shell", "location", msys2Loc)
 	shell.SetShell(func(c string) error {
+		log.Debug("Running msys2 shell", "command", c)
 		if wd, err := os.Getwd(); err == nil {
 			util.SetEnv("__CD__", wd)
+		} else {
+			log.Warn("Error getting current working directory", "error", err)
 		}
 		cmd := exec.Command(msys2Loc, "-defterm", "-no-start", "-here", "-c", c)
 		cmd.Stdout = os.Stdout
