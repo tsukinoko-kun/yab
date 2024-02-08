@@ -3,13 +3,13 @@ package use
 import (
 	"fmt"
 
-	lua "github.com/Frank-Mayer/gopher-lua"
+	lua "github.com/Frank-Mayer/yab/internal/lua"
 	"github.com/Frank-Mayer/yab/internal/util"
 	"github.com/charmbracelet/log"
 )
 
 // usable is an array of usable packages
-var Usable = []string{"golang", "nodejs", "mingw"}
+var Usable = []string{"golang", "nodejs", "mingw", "msys2"}
 
 func Use(l *lua.LState) int {
 	pack := l.CheckString(1)
@@ -38,8 +38,10 @@ func use(pack string, version string) error {
 		return useGo(version)
 	case "nodejs":
 		return useNode(version)
-	case "wingw":
+	case "mingw":
 		return useMingw(version)
+	case "msys2":
+		return useMsys2(version)
 	}
 	return fmt.Errorf("Package '%s' not supported", pack)
 }

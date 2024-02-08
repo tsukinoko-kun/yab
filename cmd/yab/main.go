@@ -45,6 +45,7 @@ func main() {
 		cmd := exec.Command(attached)
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
+		cmd.Stdin = os.Stdin
 		if err := cmd.Run(); err != nil {
 			log.Fatal("Error running attached command", "error", err)
 		}

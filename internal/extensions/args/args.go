@@ -1,6 +1,6 @@
 package args
 
-import "github.com/Frank-Mayer/gopher-lua"
+import "github.com/Frank-Mayer/yab/internal/lua"
 
 var luaArgs []string
 

@@ -1,4 +1,4 @@
-# Documentation v0.1.2
+# Documentation v0.1.3
 
 ## Usage
 
@@ -36,14 +36,18 @@ Creates definitions file in global config.
 
 Prints the yab environment.
 
+**yab [configs ...] --attach [command]**
+
+Attaches a command to the yab environment after running all given configs.
+
 ## Lua API Functions (in the `yab` module)
 
 ### 𝑓 use
 
-*Makes the specified package available for use in the script. Currently supported packages are: golang, nodejs, mingw.*
+*Makes the specified package available for use in the script. Currently supported packages are: golang, nodejs, mingw, msys2.*
 
 **Parameters:** 
-* package `'golang'|'nodejs'|'mingw'`
+* package `'golang'|'nodejs'|'mingw'|'msys2'`
 * version `string`
 
 **Returns:** None

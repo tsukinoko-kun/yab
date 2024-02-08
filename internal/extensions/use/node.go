@@ -1,7 +1,6 @@
 package use
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -10,15 +9,13 @@ import (
 	"github.com/Frank-Mayer/yab/internal/cache"
 	"github.com/Frank-Mayer/yab/internal/util"
 	"github.com/charmbracelet/log"
+	"github.com/pkg/errors"
 )
 
 func useNode(version string) error {
 	p, err := cache.InstallPath("node", version)
 	if err != nil {
-		return errors.Join(
-			fmt.Errorf("Error getting install path for node version '%s'", version),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error getting install path for node version '%s'", version))
 	}
 
 	defer func() {
@@ -65,10 +62,7 @@ func useNode(version string) error {
 			return nil
 		}
 	} else {
-		return errors.Join(
-			fmt.Errorf("Error checking cache for node version '%s'", version),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error checking cache for node version '%s'", version))
 	}
 
 	log.Info("Installing dependency", "package", "node", "version", version)
@@ -112,7 +106,7 @@ func useNode(version string) error {
 	filepath := filepath.Join(p, filename)
 
 	if err := util.Download(url, filepath); err != nil {
-		return err
+		return errors.Wrap(err, fmt.Sprintf("Error downloading node version '%s'", version))
 	}
 	defer func() {
 		log.Debug("Removing file", "filepath", filepath)
@@ -122,10 +116,7 @@ func useNode(version string) error {
 	}()
 
 	if err := util.Unzip(filepath); err != nil {
-		return errors.Join(
-			fmt.Errorf("Error unzipping file '%s'", filepath),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error unzipping file '%s'", filepath))
 	}
 
 	return nil
