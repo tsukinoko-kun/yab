@@ -66,7 +66,9 @@ func useMsys2(version string) error {
 
 	log.Debug("Running msys2 installer", "filepath", fp)
 	if wd, err := os.Getwd(); err == nil {
+		log.Debugf("Got current working directory '%s'", wd)
 		if err := os.Chdir(p); err != nil {
+			log.Debug("Changed working directory", "path", p)
 			err := func() error {
 				cmd := exec.Command(fp)
 				cmd.Stdout = os.Stdout
@@ -74,6 +76,7 @@ func useMsys2(version string) error {
 				if err := cmd.Run(); err != nil {
 					return errors.Wrap(err, fmt.Sprintf("Error running msys2 installer '%s'", fp))
 				}
+				log.Debug("Run msys2 installer", "command", cmd)
 				return nil
 			}()
 			if err := os.Chdir(wd); err != nil {
