@@ -2,7 +2,6 @@ package use
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -15,23 +14,24 @@ import (
 	"github.com/Frank-Mayer/yab/internal/cache"
 	"github.com/Frank-Mayer/yab/internal/util"
 	"github.com/charmbracelet/log"
+	"github.com/pkg/errors"
 )
 
 // mingwLatest returns the latest mingw version from github api
 func mingwLatest() (string, error) {
 	resp, err := http.Get("https://api.github.com/repos/brechtsanders/winlibs_mingw/releases/latest")
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to request latest mingw version"), err)
+		return "", errors.Wrap(err, "Failed to request latest mingw version")
 	}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to read response body for latest mingw version"), err)
+		return "", errors.Wrap(err, "Failed to read response body for latest mingw version")
 	}
 	var result map[string]any
 	err = json.Unmarshal([]byte(body), &result)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to unmarshal response body for latest mingw version"), err)
+		return "", errors.Wrap(err, "Failed to unmarshal response body for latest mingw version")
 	}
 	if tagName, ok := result["tag_name"]; ok {
 		return tagName.(string), nil
@@ -46,17 +46,17 @@ func mingwLatest() (string, error) {
 func mingwTagAssets(tag string) (string, error) {
 	resp, err := http.Get("https://api.github.com/repos/brechtsanders/winlibs_mingw/releases/tags/" + tag)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to request mingw version '%s'", tag), err)
+		return "", errors.Wrap(err, fmt.Sprintf("Failed to request mingw version '%s'", tag))
 	}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to read response body for mingw version '%s'", tag), err)
+		return "", errors.Wrap(err, fmt.Sprintf("Failed to read response body for mingw version '%s'", tag))
 	}
 	var result map[string]any
 	err = json.Unmarshal([]byte(body), &result)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to unmarshal response body for mingw version '%s'", tag), err)
+		return "", errors.Wrap(err, fmt.Sprintf("Failed to unmarshal response body for mingw version '%s'", tag))
 	}
 	if assetsUrl, ok := result["assets_url"]; ok {
 		return assetsUrl.(string), nil
@@ -71,21 +71,21 @@ func mingwTagAssets(tag string) (string, error) {
 func mingwFindAsset(tag string) (string, error) {
 	assetsUrl, err := mingwTagAssets(tag)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to get assets url for mingw version '%s'", tag), err)
+		return "", errors.Wrap(err, fmt.Sprintf("Failed to get assets url for mingw version '%s'", tag))
 	}
 	resp, err := http.Get(assetsUrl)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to request assets url for mingw version '%s'", tag), err)
+		return "", errors.Wrap(err, fmt.Sprintf("Failed to request assets url for mingw version '%s'", tag))
 	}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to read response body for assets url for mingw version '%s'", tag), err)
+		return "", errors.Wrap(err, fmt.Sprintf("Failed to read response body for assets url for mingw version '%s'", tag))
 	}
 	var result []map[string]any
 	err = json.Unmarshal([]byte(body), &result)
 	if err != nil {
-		return "", errors.Join(fmt.Errorf("Failed to unmarshal response body for assets url for mingw version '%s'", tag), err)
+		return "", errors.Wrap(err, fmt.Sprintf("Failed to unmarshal response body for assets url for mingw version '%s'", tag))
 	}
 	var arch string
 	switch runtime.GOARCH {
@@ -123,7 +123,7 @@ func mingwFindAsset(tag string) (string, error) {
 
 func useMingw(version string) error {
 	if runtime.GOOS != "windows" {
-		log.Warn("Not on windows, not installing mingw")
+		log.Warn("Not on windows, mingw installation skipped")
 		return nil
 	}
 
@@ -132,20 +132,14 @@ func useMingw(version string) error {
 		var err error
 		version, err = mingwLatest()
 		if err != nil {
-			return errors.Join(
-				fmt.Errorf("Error getting latest mingw version"),
-				err,
-			)
+			return errors.Wrap(err, "Error getting latest mingw version")
 		}
 		log.Warnf(`Latest mingw version is '%s' you should use this version with 'yab.use("mingw", "%s")'`, version, version)
 	}
 
 	p, err := cache.InstallPath("mingw", version)
 	if err != nil {
-		return errors.Join(
-			fmt.Errorf("Error getting install path for mingw version '%s'", version),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error getting install path for mingw version '%s'", version))
 	}
 
 	defer func() {
@@ -195,20 +189,14 @@ func useMingw(version string) error {
 			return nil
 		}
 	} else {
-		return errors.Join(
-			fmt.Errorf("Error checking cache for mingw version '%s'", version),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error checking cache for mingw version '%s'", version))
 	}
 
 	log.Info("Installing dependency", "package", "mingw", "version", version)
 
 	assetUrl, err := mingwFindAsset(version)
 	if err != nil {
-		return errors.Join(
-			fmt.Errorf("Error getting assets url for mingw version '%s'", version),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error getting assets url for mingw version '%s'", version))
 	}
 
 	filename := posixpath.Base(assetUrl)
@@ -216,35 +204,23 @@ func useMingw(version string) error {
 
 	resp, err := http.Get(assetUrl)
 	if err != nil {
-		return errors.Join(
-			fmt.Errorf("Error downloading mingw version '%s'", version),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error downloading mingw version '%s'", version))
 	}
 	defer resp.Body.Close()
 
 	f, err := os.Create(filepath)
 	if err != nil {
-		return errors.Join(
-			fmt.Errorf("Error creating mingw version '%s'", version),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error creating mingw version '%s'", version))
 	}
 	defer f.Close()
 
 	_, err = io.Copy(f, resp.Body)
 	if err != nil {
-		return errors.Join(
-			fmt.Errorf("Error writing mingw version '%s'", version),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error writing mingw version '%s'", version))
 	}
 
 	if err := util.Unzip(filepath); err != nil {
-		return errors.Join(
-			fmt.Errorf("Error unzipping file '%s'", filepath),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error unzipping file '%s'", filepath))
 	}
 
 	defer func() {

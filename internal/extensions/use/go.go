@@ -1,7 +1,6 @@
 package use
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -10,15 +9,13 @@ import (
 	"github.com/Frank-Mayer/yab/internal/cache"
 	"github.com/Frank-Mayer/yab/internal/util"
 	"github.com/charmbracelet/log"
+	"github.com/pkg/errors"
 )
 
 func useGo(version string) error {
 	p, err := cache.InstallPath("go", version)
 	if err != nil {
-		return errors.Join(
-			fmt.Errorf("Error getting install path for go version '%s'", version),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error getting install path for go version '%s'", version))
 	}
 
 	defer func() {
@@ -37,10 +34,7 @@ func useGo(version string) error {
 			return nil
 		}
 	} else {
-		return errors.Join(
-			fmt.Errorf("Error checking cache for go version '%s'", version),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error checking cache for go version '%s'", version))
 	}
 
 	log.Info("Installing dependency", "package", "go", "version", version)
@@ -66,10 +60,7 @@ func useGo(version string) error {
 	}()
 
 	if err := util.Unzip(filepath); err != nil {
-		return errors.Join(
-			fmt.Errorf("Error unzipping file '%s'", filepath),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error unzipping file '%s'", filepath))
 	}
 
 	return nil

@@ -4,7 +4,6 @@ import (
 	"archive/tar"
 	"archive/zip"
 	"compress/gzip"
-	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -12,6 +11,7 @@ import (
 	"path/filepath"
 
 	"github.com/charmbracelet/log"
+	"github.com/pkg/errors"
 )
 
 // Unzip unzips an archive at its location
@@ -52,10 +52,7 @@ func unzip(archPath string, outPath string) error {
 	log.Debug("Unzipping", "outPath", outPath)
 	r, err := zip.OpenReader(archPath)
 	if err != nil {
-		return errors.Join(
-			fmt.Errorf("Error opening zip file '%s'", archPath),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("Error opening zip file '%s'", archPath))
 	}
 	defer r.Close()
 
@@ -63,10 +60,7 @@ func unzip(archPath string, outPath string) error {
 		if err := func(f *zip.File) error {
 			rc, err := f.Open()
 			if err != nil {
-				return errors.Join(
-					fmt.Errorf("Error opening file '%s' in zip file '%s'", f.Name, archPath),
-					err,
-				)
+				return errors.Wrap(err, fmt.Sprintf("Error opening file '%s' in zip file '%s'", f.Name, archPath))
 			}
 			defer rc.Close()
 
@@ -77,10 +71,7 @@ func unzip(archPath string, outPath string) error {
 			}
 
 			if err := os.MkdirAll(filepath.Dir(p), 0777); err != nil {
-				return errors.Join(
-					fmt.Errorf("Error creating directory '%s'", filepath.Dir(p)),
-					err,
-				)
+				return errors.Wrap(err, fmt.Sprintf("Error creating directory '%s'", filepath.Dir(p)))
 			}
 
 			if f.FileInfo().IsDir() {
@@ -96,18 +87,12 @@ func unzip(archPath string, outPath string) error {
 
 			file, err := os.OpenFile(p, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode()|0666)
 			if err != nil {
-				return errors.Join(
-					fmt.Errorf("Error creating file '%s'", p),
-					err,
-				)
+				return errors.Wrap(err, fmt.Sprintf("Error creating file '%s'", p))
 			}
 			defer file.Close()
 
 			if _, err = io.Copy(file, rc); err != nil {
-				return errors.Join(
-					fmt.Errorf("Error writing to file '%s'", p),
-					err,
-				)
+				return errors.Wrap(err, fmt.Sprintf("Error writing to file '%s'", p))
 			}
 			return nil
 		}(f); err != nil {
@@ -131,10 +116,7 @@ func untar(tarStream io.Reader, outPath string) error {
 		}
 
 		if err != nil {
-			return errors.Join(
-				fmt.Errorf("Error reading tar file"),
-				err,
-			)
+			return errors.Wrap(err, "Error reading tar file")
 		}
 
 		err = func(header *tar.Header) error {
@@ -147,70 +129,40 @@ func untar(tarStream io.Reader, outPath string) error {
 			switch header.Typeflag {
 			case tar.TypeDir:
 				if err := os.MkdirAll(p, 0777); err != nil {
-					return errors.Join(
-						fmt.Errorf("Error creating directory '%s'", header.Name),
-						err,
-					)
+					return errors.Wrap(err, fmt.Sprintf("Error creating directory '%s'", header.Name))
 				}
 			case tar.TypeReg:
 				if err := os.MkdirAll(filepath.Dir(p), 0777); err != nil {
-					return errors.Join(
-						fmt.Errorf("Error creating directory '%s'", filepath.Dir(p)),
-						err,
-					)
+					return errors.Wrap(err, fmt.Sprintf("Error creating directory '%s'", filepath.Dir(p)))
 				}
 				outFile, err := os.OpenFile(p, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, header.FileInfo().Mode()|0666)
 				if err != nil {
-					return errors.Join(
-						fmt.Errorf("Error creating file '%s'", p),
-						err,
-					)
+					return errors.Wrap(err, fmt.Sprintf("Error creating file '%s'", p))
 				}
 				if _, err := io.Copy(outFile, tarReader); err != nil {
-					return errors.Join(
-						fmt.Errorf("Error writing to file '%s'", p),
-						err,
-					)
+					return errors.Wrap(err, fmt.Sprintf("Error writing to file '%s'", p))
 				}
 				// set executable bit
 				if err := os.Chmod(p, header.FileInfo().Mode()); err != nil {
-					return errors.Join(
-						fmt.Errorf("Error setting executable bit on '%s'", p),
-						err,
-					)
+					return errors.Wrap(err, fmt.Sprintf("Error setting executable bit on '%s'", p))
 				}
 				outFile.Close()
 			case tar.TypeSymlink:
 				if err := os.MkdirAll(filepath.Dir(p), 0777); err != nil {
-					return errors.Join(
-						fmt.Errorf("Error creating directory '%s'", filepath.Dir(p)),
-						err,
-					)
+					return errors.Wrap(err, fmt.Sprintf("Error creating directory '%s'", filepath.Dir(p)))
 				}
 				if err := os.Symlink(header.Linkname, p); err != nil {
-					return errors.Join(
-						fmt.Errorf("Error creating symlink '%s'", p),
-						err,
-					)
+					return errors.Wrap(err, fmt.Sprintf("Error creating symlink '%s'", p))
 				}
 			case tar.TypeLink:
 				if err := os.MkdirAll(filepath.Dir(p), 0777); err != nil {
-					return errors.Join(
-						fmt.Errorf("Error creating directory '%s'", filepath.Dir(p)),
-						err,
-					)
+					return errors.Wrap(err, fmt.Sprintf("Error creating directory '%s'", filepath.Dir(p)))
 				}
 				if err := os.Link(header.Linkname, p); err != nil {
-					return errors.Join(
-						fmt.Errorf("Error creating hardlink '%s'", p),
-						err,
-					)
+					return errors.Wrap(err, fmt.Sprintf("Error creating hardlink '%s'", p))
 				}
 			default:
-				return errors.Join(
-					fmt.Errorf("Unable to untar type : %c in file %s", header.Typeflag, header.Name),
-					err,
-				)
+				return errors.Wrap(err, fmt.Sprintf("Unable to untar type : %c in file %s", header.Typeflag, header.Name))
 			}
 			return nil
 		}(header)

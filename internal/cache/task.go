@@ -1,23 +1,20 @@
 package cache
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
 
 	"github.com/Frank-Mayer/yab/internal/util"
 	"github.com/charmbracelet/log"
+	"github.com/pkg/errors"
 	hash "github.com/segmentio/fasthash/fnv1a"
 )
 
 func ProjCachePath() (string, error) {
 	global, err := util.GetGlobalConfigPath()
 	if err != nil {
-		return "", errors.Join(
-			errors.New("Could not get global config path"),
-			err,
-		)
+		return "", errors.Wrap(err, "Could not get global config path")
 	}
 
 	proj := hash.HashString64(util.ConfigPath)
@@ -37,10 +34,7 @@ func LookupToolchain(in []string, out []string, tool string) (bool, error, func(
 	// cach file
 	projCachePath, err := ProjCachePath()
 	if err != nil {
-		return false, errors.Join(
-			errors.New("Failed to get project cache path"),
-			err,
-		), nil
+		return false, errors.Wrap(err, "Failed to get project cache path"), nil
 	}
 	if projCachePath == "" {
 		return false, errors.New("Project cache path is empty"), nil
@@ -52,10 +46,7 @@ func LookupToolchain(in []string, out []string, tool string) (bool, error, func(
 	for _, i := range in {
 		toolchainHash = hash.AddString64(toolchainHash, i)
 		if content, err := os.ReadFile(i); err != nil {
-			return false, errors.Join(
-				fmt.Errorf("Failed to read input file '%s'", i),
-				err,
-			), nil
+			return false, errors.Wrap(err, fmt.Sprintf("Failed to read input file '%s'", i)), nil
 		} else {
 			contentHash = hash.AddBytes64(contentHash, content)
 		}
@@ -72,10 +63,7 @@ func LookupToolchain(in []string, out []string, tool string) (bool, error, func(
 		// write the new cache file
 		if err := os.WriteFile(toolchainCacheFile, []byte(hashStr(contentHash)), 0777); err != nil {
 			// _ = os.Remove(toolchainCacheFile)
-			return errors.Join(
-				errors.New("Failed to write toolchain cache file"),
-				err,
-			)
+			return errors.Wrap(err, "Failed to write toolchain cache file")
 		}
 		return nil
 	}
@@ -88,10 +76,7 @@ func LookupToolchain(in []string, out []string, tool string) (bool, error, func(
 				log.Debug("Output file does not exist", "path", o)
 				return false, nil, fn
 			}
-			return false, errors.Join(
-				errors.New("Failed to check if output file exists"),
-				err,
-			), nil
+			return false, errors.Wrap(err, "Failed to check if output file exists"), nil
 		}
 	}
 
@@ -102,10 +87,7 @@ func LookupToolchain(in []string, out []string, tool string) (bool, error, func(
 			if os.IsNotExist(err) {
 				return false, fmt.Errorf("Input file '%s' does not exist", i), nil
 			}
-			return false, errors.Join(
-				errors.New("Failed to check if input file exists"),
-				err,
-			), nil
+			return false, errors.Wrap(err, "Failed to check if input file exists"), nil
 		}
 	}
 
@@ -115,10 +97,7 @@ func LookupToolchain(in []string, out []string, tool string) (bool, error, func(
 			log.Debug("Toolchain cache file does not exist", "path", toolchainCacheFile)
 			return false, nil, fn
 		}
-		return false, errors.Join(
-			errors.New("Failed to check if toolchain cache file exists"),
-			err,
-		), nil
+		return false, errors.Wrap(err, "Failed to check if toolchain cache file exists"), nil
 	}
 	if stat.IsDir() {
 		return false, fmt.Errorf("Toolchain cache file is a directory"), nil
@@ -127,10 +106,7 @@ func LookupToolchain(in []string, out []string, tool string) (bool, error, func(
 	// check if the toolchain cache file is up to date
 	currentCacheContent, err := os.ReadFile(toolchainCacheFile)
 	if err != nil {
-		return false, errors.Join(
-			errors.New("Failed to read toolchain cache file"),
-			err,
-		), nil
+		return false, errors.Wrap(err, "Failed to read toolchain cache file"), nil
 	}
 	if hashStr(contentHash) == string(currentCacheContent) {
 		log.Debug("Toolchain cache file is up to date", "path", toolchainCacheFile)

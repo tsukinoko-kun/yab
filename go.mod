@@ -1,6 +1,6 @@
 module github.com/Frank-Mayer/yab
 
-go 1.22
+go 1.22.0
 
 require (
 	fyne.io/fyne/v2 v2.4.3
@@ -10,6 +10,7 @@ require (
 	github.com/charmbracelet/log v0.3.1
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-git/go-git/v5 v5.11.0
+	github.com/pkg/errors v0.9.1
 	github.com/segmentio/fasthash v1.0.3
 )
 

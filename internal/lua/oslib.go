@@ -4,6 +4,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/Frank-Mayer/yab/internal/shell"
 )
 
 var startedAt time.Time
@@ -12,7 +14,7 @@ func init() {
 	startedAt = time.Now()
 }
 
-func getIntField(L *LState, tb *LTable, key string, v int) int {
+func getIntField(_ *LState, tb *LTable, key string, v int) int {
 	ret := tb.RawGetString(key)
 
 	switch lv := ret.(type) {
@@ -38,7 +40,7 @@ func getIntField(L *LState, tb *LTable, key string, v int) int {
 	return v
 }
 
-func getBoolField(L *LState, tb *LTable, key string, v bool) bool {
+func getBoolField(_ *LState, tb *LTable, key string, v bool) bool {
 	ret := tb.RawGetString(key)
 	if lb, ok := ret.(LBool); ok {
 		return bool(lb)
@@ -68,7 +70,7 @@ var osFuncs = map[string]LGFunction{
 }
 
 func osClock(L *LState) int {
-	L.Push(LNumber(float64(time.Now().Sub(startedAt)) / float64(time.Second)))
+	L.Push(LNumber(float64(time.Since(startedAt)) / float64(time.Second)))
 	return 1
 }
 
@@ -78,9 +80,17 @@ func osDiffTime(L *LState) int {
 }
 
 func osExecute(L *LState) int {
+	cmdStr := L.CheckString(1)
+	if ok, err, exitCode := shell.UseSell(cmdStr); ok {
+		if err != nil {
+			L.RaiseError(err.Error())
+		}
+		L.Push(LNumber(exitCode))
+		return 1
+	}
 	var procAttr os.ProcAttr
 	procAttr.Files = []*os.File{os.Stdin, os.Stdout, os.Stderr}
-	cmd, args := popenArgs(L.CheckString(1))
+	cmd, args := popenArgs(cmdStr)
 	args = append([]string{cmd}, args...)
 	process, err := os.StartProcess(cmd, args, &procAttr)
 	if err != nil {

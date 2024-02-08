@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -18,6 +17,7 @@ import (
 	"github.com/Frank-Mayer/yab/internal/mainutil"
 	"github.com/Frank-Mayer/yab/internal/util"
 	"github.com/charmbracelet/log"
+	"github.com/pkg/errors"
 )
 
 func Install(w fyne.Window) {
@@ -206,10 +206,7 @@ func addWindowsPath(directory string) error {
 	cmd := exec.Command("reg", "add", "HKCU\\Environment", "/v", "Path", "/t", "REG_SZ", "/d", directory+";"+currentPath, "/f")
 	err := cmd.Run()
 	if err != nil {
-		return errors.Join(
-			errors.New("could not add path to shell"),
-			err,
-		)
+		return errors.Wrap(err, "could not add path to shell")
 	}
 	return nil
 }
@@ -217,18 +214,15 @@ func addWindowsPath(directory string) error {
 func appent(path string, content string) error {
 	f, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		return errors.Join(
-			fmt.Errorf("could not open %s", path),
+		return errors.Wrap(
 			err,
+			fmt.Sprintf("could not open %s", path),
 		)
 	}
 	defer f.Close()
 
 	if _, err := f.WriteString("\n" + content + "\n"); err != nil {
-		return errors.Join(
-			fmt.Errorf("could not write to %s", path),
-			err,
-		)
+		return errors.Wrap(err, fmt.Sprintf("could not write to %s", path))
 	}
 	return nil
 }
