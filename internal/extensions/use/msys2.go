@@ -40,7 +40,7 @@ func useMsys2(version string) error {
 				log.Warn("Error getting current working directory", "error", err)
 			}
 			// add the posix path to the msys2 shell
-			p := WinToPosixPath(os.Getenv("PATH"))
+			p := WinToPosixPath(util.UsedPath)
 			log.Debug("Setting PATH for msys2 shell", "path", p)
 			c = fmt.Sprintf("export PATH=\"$PATH:%s\";%s", p, c)
 			log.Debug("Running msys2 shell", "command", c)

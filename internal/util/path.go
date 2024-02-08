@@ -5,10 +5,22 @@ import (
 	"runtime"
 )
 
-var origEnv map[string]string
+var (
+	origEnv map[string]string
+	UsedPath    string
+)
 
 func AddToPath(pathToAdd string) {
 	PushEnv("PATH", pathToAdd)
+	if UsedPath == "" {
+		UsedPath = pathToAdd
+	} else {
+		if runtime.GOOS == "windows" {
+			UsedPath += ";" + pathToAdd
+		} else {
+			UsedPath += ":" + pathToAdd
+		}
+	}
 }
 
 func PushEnv(key string, pathToAdd string) {
@@ -19,13 +31,13 @@ func PushEnv(key string, pathToAdd string) {
 	}
 
 	if path, ok := os.LookupEnv(key); ok {
-        if runtime.GOOS == "windows" {
-            SetEnv(key, pathToAdd+";"+path)
-        } else {
-            SetEnv(key, pathToAdd+":"+path)
-        }
+		if runtime.GOOS == "windows" {
+			SetEnv(key, pathToAdd+";"+path)
+		} else {
+			SetEnv(key, pathToAdd+":"+path)
+		}
 	} else {
-        SetEnv(key, pathToAdd)
+		SetEnv(key, pathToAdd)
 	}
 }
 
