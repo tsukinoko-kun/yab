@@ -26,7 +26,7 @@ jobs:
       - name: Setup Go environment
         uses: actions/setup-go@v4.1.0
         with:
-          go-version: ">=1.21.6"
+          go-version: ">=1.22.0"
           cache: true
           architecture: x64
       - name: Checkout
@@ -50,7 +50,7 @@ jobs:
       - name: Setup Go environment
         uses: actions/setup-go@v4.1.0
         with:
-          go-version: ">=1.21.6"
+          go-version: ">=1.22.0"
           cache: true
           architecture: x64
       - name: Checkout
@@ -83,7 +83,7 @@ jobs:
       - name: Setup Go environment
         uses: actions/setup-go@v4.1.0
         with:
-          go-version: ">=1.21.6"
+          go-version: ">=1.22.0"
           cache: true
           architecture: x64
       - name: Checkout
