@@ -13,8 +13,10 @@ func UseSell(command string) (bool, error, int) {
 		return false, nil, 0
 	}
 	cmd := shell(command)
-	err := cmd.Run()
-	if err != nil {
+	cmd.Stdout = nil
+	cmd.Stderr = nil
+	cmd.Stdin = nil
+	if err := cmd.Run(); err != nil {
 		if exitError, ok := err.(*exec.ExitError); ok {
 			return true, nil, exitError.ExitCode()
 		} else {
