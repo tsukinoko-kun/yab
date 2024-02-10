@@ -1,6 +1,9 @@
 package shell
 
-import "os/exec"
+import (
+	"os"
+	"os/exec"
+)
 
 var shell func(string) *exec.Cmd = nil
 
@@ -13,9 +16,9 @@ func UseSell(command string) (bool, error, int) {
 		return false, nil, 0
 	}
 	cmd := shell(command)
-	cmd.Stdout = nil
-	cmd.Stderr = nil
-	cmd.Stdin = nil
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
 	if err := cmd.Run(); err != nil {
 		if exitError, ok := err.(*exec.ExitError); ok {
 			return true, nil, exitError.ExitCode()
