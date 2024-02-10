@@ -8,6 +8,7 @@ import (
 	"github.com/Frank-Mayer/yab/internal/extensions/cd"
 	"github.com/Frank-Mayer/yab/internal/extensions/checkexec"
 	"github.com/Frank-Mayer/yab/internal/extensions/download"
+	"github.com/Frank-Mayer/yab/internal/extensions/env"
 	"github.com/Frank-Mayer/yab/internal/extensions/fileinfo"
 	"github.com/Frank-Mayer/yab/internal/extensions/find"
 	"github.com/Frank-Mayer/yab/internal/extensions/git"
@@ -42,13 +43,14 @@ var Functions = []Function{
 			"Currently supported packages are: " +
 			strings.Join(use.Usable, ", ") + ".",
 		[]string{
-			"package '" + strings.Join(use.Usable, "'|'") + "'",
+			"package \"" + strings.Join(use.Usable, "\"|\"") + "\"",
 			"version string"},
 		[]string{},
 		use.Use,
 		"",
-		"yab.use('golang', '1.21.6')\n" +
-			"yab.use('nodejs', '14.17.6')",
+		"yab.use(\"golang\", \"1.22.0\")\n" +
+			"yab.use(\"nodejs\", \"14.17.6\")\n" +
+			"yab.use(\"msys2\", \"2024-01-13\")",
 	},
 
 	{
@@ -58,11 +60,8 @@ var Functions = []Function{
 		[]string{"true if the toolchain was executed, false otherwise."},
 		task.Task,
 		"boolean",
-		"yab.task(\n" +
-			"\t{'foo.c'},\n" +
-			"\t{'foo.o'},\n" +
-			"\tfunction()\n" +
-			"\t\tos.execute('gcc -c foo.c -o foo.o')\n" +
+		"yab.task({ \"foo.c\" }, { \"foo.o\" }, function()\n" +
+			"\tos.execute(\"gcc -c foo.c -o foo.o\")\n" +
 			"end)",
 	},
 
@@ -84,6 +83,16 @@ var Functions = []Function{
 		osarch.OsArch,
 		"'amd64'|'arm64'",
 		"",
+	},
+
+	{
+		"setenv",
+		"Sets an environment variable.",
+		[]string{"key string", "value string"},
+		[]string{},
+		env.SetEnv,
+		"",
+		`yab.setenv("FOO", "bar")`,
 	},
 
 	{
@@ -192,7 +201,7 @@ var Functions = []Function{
 		[]string{},
 		zip.MakeZip,
 		"",
-		"yab.zip(\n\t{'foo.txt', 'bar.txt', 'baz/'},\n\t'archive.zip'\n)",
+		"yab.zip({ \"foo.txt\", \"bar.txt\", \"baz/\" }, \"archive.zip\")",
 	},
 
 	{
@@ -202,7 +211,7 @@ var Functions = []Function{
 		[]string{"The name of the downloaded file."},
 		download.Download,
 		"string",
-		"yab.download('https://example.com/foo.txt')",
+		"yab.download(\"https://example.com/foo.txt\")",
 	},
 	{
 		"download",
@@ -211,7 +220,7 @@ var Functions = []Function{
 		[]string{"The name of the downloaded file."},
 		download.Download,
 		"string",
-		"yab.download('https://example.com/foo.txt', 'foo.txt')",
+		"yab.download(\"https://example.com/foo.txt\", \"foo.txt\")",
 	},
 
 	{
@@ -223,7 +232,7 @@ var Functions = []Function{
 		[]string{},
 		watch.Watch,
 		"",
-		"yab.watch('foo.txt', function(file, event)\n\tprint('foo.txt changed!')\nend)",
+		"yab.watch(\"foo.txt\", function(file, event)\n\tprint(\"foo.txt changed!\")\nend)",
 	},
 
 	{
@@ -243,7 +252,7 @@ var Functions = []Function{
 		[]string{"A table containing the matching file paths."},
 		find.Find,
 		"table",
-		"yab.find('*.txt')",
+		"yab.find(\"*.txt\")",
 	},
 	{
 		"find",
@@ -252,7 +261,7 @@ var Functions = []Function{
 		[]string{"A table containing the matching file paths."},
 		find.Find,
 		"table",
-		"yab.find('foo', '*.txt')",
+		"yab.find(\"foo\", \"*.txt\")",
 	},
 
 	{
@@ -262,7 +271,7 @@ var Functions = []Function{
 		[]string{"A table containing the file information (name, size, mode, modtime, isdir, sys). See https://pkg.go.dev/io/fs#FileInfo for details."},
 		fileinfo.FileInfo,
 		"table",
-		"local foo_info = yab.fileinfo('foo.txt')\nprint(foo_info.size)",
+		"local foo_info = yab.fileinfo(\"foo.txt\")\nprint(foo_info.size)",
 	},
 
 	{
@@ -272,7 +281,7 @@ var Functions = []Function{
 		[]string{"A string representation of the table."},
 		pretty.Pretty,
 		"string",
-		"yab.pretty({foo = 'bar', baz = 'qux'})",
+		"yab.pretty({foo = \"bar\", baz = \"qux\"})",
 	},
 
 	{
@@ -282,7 +291,7 @@ var Functions = []Function{
 		[]string{},
 		pretty.PrintPretty,
 		"",
-		"yab.print({foo = 'bar', baz = 'qux'})",
+		"yab.print({foo = \"bar\", baz = \"qux\"})",
 	},
 }
 

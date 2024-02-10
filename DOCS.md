@@ -1,4 +1,4 @@
-# Documentation v0.2.0
+# Documentation v0.2.1
 
 ## Usage
 
@@ -47,7 +47,7 @@ Attaches a command to the yab environment after running all given configs.
 *Makes the specified package available for use in the script. Currently supported packages are: golang, nodejs, mingw, msys2.*
 
 **Parameters:** 
-* package `'golang'|'nodejs'|'mingw'|'msys2'`
+* package `"golang"|"nodejs"|"mingw"|"msys2"`
 * version `string`
 
 **Returns:** None
@@ -55,8 +55,9 @@ Attaches a command to the yab environment after running all given configs.
 **Example:**
 
 ```lua
-yab.use('golang', '1.21.6')
-yab.use('nodejs', '14.17.6')
+yab.use("golang", "1.22.0")
+yab.use("nodejs", "14.17.6")
+yab.use("msys2", "2024-01-13")
 ```
 
 ### 𝑓 task
@@ -73,11 +74,8 @@ yab.use('nodejs', '14.17.6')
 **Example:**
 
 ```lua
-yab.task(
-	{'foo.c'},
-	{'foo.o'},
-	function()
-		os.execute('gcc -c foo.c -o foo.o')
+yab.task({ "foo.c" }, { "foo.o" }, function()
+	os.execute("gcc -c foo.c -o foo.o")
 end)
 ```
 
@@ -96,6 +94,22 @@ end)
 **Parameters:** None
 
 **Returns:** "amd64" or "arm64" on the respective system.
+
+### 𝑓 setenv
+
+*Sets an environment variable.*
+
+**Parameters:** 
+* key `string`
+* value `string`
+
+**Returns:** None
+
+**Example:**
+
+```lua
+yab.setenv("FOO", "bar")
+```
 
 ### 𝑓 args
 
@@ -220,10 +234,7 @@ yab.rm("./foo/bar", true)
 **Example:**
 
 ```lua
-yab.zip(
-	{'foo.txt', 'bar.txt', 'baz/'},
-	'archive.zip'
-)
+yab.zip({ "foo.txt", "bar.txt", "baz/" }, "archive.zip")
 ```
 
 ### 𝑓 download
@@ -238,7 +249,7 @@ yab.zip(
 **Example:**
 
 ```lua
-yab.download('https://example.com/foo.txt')
+yab.download("https://example.com/foo.txt")
 ```
 
 ### 𝑓 download
@@ -254,7 +265,7 @@ yab.download('https://example.com/foo.txt')
 **Example:**
 
 ```lua
-yab.download('https://example.com/foo.txt', 'foo.txt')
+yab.download("https://example.com/foo.txt", "foo.txt")
 ```
 
 ### 𝑓 watch
@@ -270,8 +281,8 @@ yab.download('https://example.com/foo.txt', 'foo.txt')
 **Example:**
 
 ```lua
-yab.watch('foo.txt', function(file, event)
-	print('foo.txt changed!')
+yab.watch("foo.txt", function(file, event)
+	print("foo.txt changed!")
 end)
 ```
 
@@ -301,7 +312,7 @@ yab.block()
 **Example:**
 
 ```lua
-yab.find('*.txt')
+yab.find("*.txt")
 ```
 
 ### 𝑓 find
@@ -317,7 +328,7 @@ yab.find('*.txt')
 **Example:**
 
 ```lua
-yab.find('foo', '*.txt')
+yab.find("foo", "*.txt")
 ```
 
 ### 𝑓 fileinfo
@@ -332,7 +343,7 @@ yab.find('foo', '*.txt')
 **Example:**
 
 ```lua
-local foo_info = yab.fileinfo('foo.txt')
+local foo_info = yab.fileinfo("foo.txt")
 print(foo_info.size)
 ```
 
@@ -348,7 +359,7 @@ print(foo_info.size)
 **Example:**
 
 ```lua
-yab.pretty({foo = 'bar', baz = 'qux'})
+yab.pretty({foo = "bar", baz = "qux"})
 ```
 
 ### 𝑓 print
@@ -363,6 +374,6 @@ yab.pretty({foo = 'bar', baz = 'qux'})
 **Example:**
 
 ```lua
-yab.print({foo = 'bar', baz = 'qux'})
+yab.print({foo = "bar", baz = "qux"})
 ```
 
