@@ -180,6 +180,18 @@ yab.task(yab.find("**.go"), bin_name, function()
 end)
 ```
 
+## Attach external applications
+
+I like to create an `env.lua` config where all shared tools are defined.
+
+```lua
+local yab = require("yab")
+yab.use("golang", "1.21.6")
+yab.use("nodejs", "20.11.1")
+```
+
+I now can start a shell using the specified environment using `yab env --attach sh` or start neovim using `yab env --attach nvim`.
+
 ## Badge
 
 [![Yab Project](https://img.shields.io/badge/Yab_Project-2C2D72?logo=lua)](https://github.com/Frank-Mayer/yab)
