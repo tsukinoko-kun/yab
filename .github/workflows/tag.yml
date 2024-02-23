@@ -19,7 +19,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install jq
+        run: sudo apt-get install jq
+      - name: Setup Go environment
+        uses: actions/setup-go@v4.1.0
+        with:
+          go-version: ">=1.22.0"
+          cache: true
+          architecture: x64
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Check for version change
+        run: |
+          go run ./cmd/yab -v
+          current=v$(go run ./cmd/yab -v 2>&1)
+          tags=$(curl https://api.github.com/repos/Frank-Mayer/yab/tags)
+          latest=$(echo $tags | jq -r '.[0].name')
+          if [ "$current" = "$latest" ]; then
+            echo "No version change detected. Exiting."
+            exit 1
+          fi
+          echo "Version change detected. Tagging. $latest -> $current"
+
   test-mac:
+    needs:
+      - check
     runs-on: macos-latest
     steps:
       - name: Setup Go environment
@@ -34,6 +61,8 @@ jobs:
         run: go test ./... -v
 
   test-win:
+    needs:
+      - check
     runs-on: windows-latest
     steps:
       - name: Setup Go environment
