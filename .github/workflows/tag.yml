@@ -82,8 +82,6 @@ jobs:
       - test-mac
     runs-on: ubuntu-latest
     steps:
-      - name: Install jq
-        run: sudo apt-get install jq
       - name: Setup Go environment
         uses: actions/setup-go@v4.1.0
         with:
@@ -99,21 +97,5 @@ jobs:
           echo "setup git complete"
           go run . -v
           current=v$(go run . -v 2>&1)
-          tags=$(curl https://api.github.com/repos/Frank-Mayer/yab/tags)
-          latest=$(echo $tags | jq -r '.[0].name')
-          if [ "$current" = "$latest" ]; then
-            echo "No version change detected. Exiting."
-            exit 0
-          fi
-          echo "Version change detected. Tagging. $latest -> $current"
           git tag -a $current -m "Release $current"
           git push origin $current
-          body="$(cat DOCS.md)"
-          body=$(echo "$body" | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/\\n/g' -e 's/"/\\"/g' -e 's/\t/\\t/g')
-          curl -L \
-          -X POST \
-          -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/Frank-Mayer/yab/releases \
-          -d '{"tag_name":"'"$current"'","name":"'"$current"'","body":"'"$body"'","draft":false,"prerelease":false,"generate_release_notes":false}'
