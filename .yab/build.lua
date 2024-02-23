@@ -9,7 +9,7 @@ if yab.os_type() == "windows" then
 end
 
 yab.task(yab.find("**.go"), bin_name, function()
-	os.execute('go build -ldflags="-s -w" -o ' .. bin_name .. " ./cmd/yab/")
+	os.execute('go build -ldflags="-s -w" -o ' .. bin_name .. " .")
 end)
 
 return bin_name

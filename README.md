@@ -122,7 +122,7 @@ https://frank-mayer.github.io/yab/
 ### Install using Go
 
 ```bash
-go install github.com/Frank-Mayer/yab/cmd/yab@latest
+go install github.com/Frank-Mayer/yab@latest
 ```
 
 ## Docs

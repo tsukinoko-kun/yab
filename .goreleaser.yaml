@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+---
+builds:
+  - binary: yab
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
+
+signs:
+  - id: yab
+    artifacts: checksum
+
+release:
+  prerelease: auto
+
+universal_binaries:
+  - replace: false
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+brews:
+  - name: yab
+    homepage: https://github.com/Frank-Mayer/yab
+    description: Yet another build tool
+    tap:
+      owner: Frank-Mayer
+      name: homebrew-tap
+    commit_author:
+      name: Frank-Mayer
+      email: gh@frankmayer.dev
