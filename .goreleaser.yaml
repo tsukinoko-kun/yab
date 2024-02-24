@@ -31,7 +31,7 @@ brews:
   - name: yab
     homepage: https://github.com/Frank-Mayer/yab
     description: Yet another build tool
-    tap:
+    repository:
       owner: Frank-Mayer
       name: homebrew-tap
     commit_author:
