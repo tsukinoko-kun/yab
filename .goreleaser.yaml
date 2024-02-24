@@ -16,10 +16,6 @@ checksum:
   name_template: "checksums.txt"
   algorithm: sha256
 
-signs:
-  - id: yab
-    artifacts: checksum
-
 release:
   prerelease: auto
 
