@@ -3,7 +3,7 @@
 name: goreleaser
 
 on:
-  push:
+  create:
     tags:
       - "**"
 
