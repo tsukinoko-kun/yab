@@ -115,15 +115,22 @@ Take a look at [this projects `.yab` folder](https://github.com/Frank-Mayer/yab/
 
 ## Installation
 
-### Download prebuild binaries or gui installer
+### Homebrew
 
-https://frank-mayer.github.io/yab/
+```sh
+brew tap Frank-Mayer/tap
+brew install Frank-Mayer/tap/yab
+```
 
-### Install using Go
+### Go install
 
 ```bash
 go install github.com/Frank-Mayer/yab@latest
 ```
+
+### Binary from release
+
+[Latest release](https://github.com/Frank-Mayer/yab/releases/latest)
 
 ## Docs
 
