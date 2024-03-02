@@ -7,6 +7,7 @@ import (
 	"github.com/Frank-Mayer/yab/internal/extensions/block"
 	"github.com/Frank-Mayer/yab/internal/extensions/cd"
 	"github.com/Frank-Mayer/yab/internal/extensions/checkexec"
+	"github.com/Frank-Mayer/yab/internal/extensions/docker"
 	"github.com/Frank-Mayer/yab/internal/extensions/download"
 	"github.com/Frank-Mayer/yab/internal/extensions/env"
 	"github.com/Frank-Mayer/yab/internal/extensions/fileinfo"
@@ -63,6 +64,25 @@ var Functions = []Function{
 		"yab.task({ \"foo.c\" }, { \"foo.o\" }, function()\n" +
 			"\tos.execute(\"gcc -c foo.c -o foo.o\")\n" +
 			"end)",
+	},
+
+	{
+		"docker_compose_up",
+		"Starts a docker-compose project.",
+		[]string{"compose_file string"},
+		[]string{},
+		docker.Compose,
+		"",
+		"yab.docker_compose_up(\"docker-compose.yml\")",
+	},
+	{
+		"docker_compose_up",
+		"Starts a docker-compose project with the default file (docker-compose.yml).",
+		[]string{},
+		[]string{},
+		docker.Compose,
+		"",
+		"yab.docker_compose_up()",
 	},
 
 	{
