@@ -89,7 +89,6 @@ func osExecute(L *LState) int {
 		L.Push(LNumber(exitCode))
 		return 1
 	}
-	println("gosh: ", cmdStr)
 	if err := ohmygosh.Execute(cmdStr); err != nil {
 		L.Push(LNumber(1))
 		return 1
