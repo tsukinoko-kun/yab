@@ -12,8 +12,4 @@ end
 
 local bin_name = require("build")
 
-if yab.os_type() == "windows" then
-	os.execute(bin_name .. join(args))
-else
-	os.execute("./" .. bin_name .. join(args))
-end
+os.execute("./" .. bin_name .. join(args))

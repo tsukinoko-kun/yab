@@ -1,9 +1,10 @@
 module github.com/Frank-Mayer/yab
 
-go 1.22.0
+go 1.22.1
 
 require (
 	fyne.io/fyne/v2 v2.4.3
+	github.com/Frank-Mayer/ohmygosh v0.0.0
 	github.com/charmbracelet/bubbles v0.18.0
 	github.com/charmbracelet/bubbletea v0.25.0
 	github.com/charmbracelet/glamour v0.6.0

@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/Frank-Mayer/ohmygosh"
 	"github.com/Frank-Mayer/yab/internal/shell"
-	"github.com/Frank-Mayer/yab/internal/util"
 )
 
 var startedAt time.Time
@@ -89,18 +89,7 @@ func osExecute(L *LState) int {
 		L.Push(LNumber(exitCode))
 		return 1
 	}
-	var procAttr os.ProcAttr
-	procAttr.Files = []*os.File{os.Stdin, os.Stdout, os.Stderr}
-	cmd, args := util.PopenArgs(cmdStr)
-	args = append([]string{cmd}, args...)
-	process, err := os.StartProcess(cmd, args, &procAttr)
-	if err != nil {
-		L.Push(LNumber(1))
-		return 1
-	}
-
-	ps, err := process.Wait()
-	if err != nil || !ps.Success() {
+	if err := ohmygosh.Execute(cmdStr); err != nil {
 		L.Push(LNumber(1))
 		return 1
 	}
