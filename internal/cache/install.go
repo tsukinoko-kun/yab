@@ -3,6 +3,7 @@ package cache
 import (
 	"os"
 	"path/filepath"
+	"runtime"
 
 	"github.com/Frank-Mayer/yab/internal/util"
 )
@@ -12,7 +13,7 @@ func InstallPath(pack string, version string) (string, error) {
 	if err != nil {
 		return "", err
 	} else {
-		p = filepath.Join(p, "cache", "install", pack, version)
+		p = filepath.Join(p, "cache_"+runtime.GOARCH, "install", pack, version)
 		// make sure the path exists
 		if err := os.MkdirAll(p, 0777); err != nil {
 			return "", err
