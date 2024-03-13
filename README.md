@@ -4,6 +4,8 @@ Yet another build tool :construction_worker: :construction:
 
 [![Homebrew](https://img.shields.io/badge/Homebrew-FBB040?logo=homebrew&logoColor=000)](#homebrew)
 
+[![Latest Release)](https://img.shields.io/github/v/release/Frank-Mayer/yab?logo=github)](https://github.com/Frank-Mayer/yab/releases/latest)
+
 [![CodeQL](https://github.com/Frank-Mayer/yab/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Frank-Mayer/yab/actions/workflows/github-code-scanning/codeql)
 
 Wouldn't it be great if you could use the same build tool for every project?
@@ -12,6 +14,11 @@ Regardless of operating system, programming language...
 Yab is just that.
 
 Use Lua scripts to define specific actions and execute them from the command line.
+
+> [!CAUTION]
+> This project is still in very early stages of development.
+> Expect breaking changes.
+> Stable API is guaranteed at v1.0.0
 
 ## Does that not already exist?
 
