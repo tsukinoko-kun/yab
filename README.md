@@ -139,6 +139,22 @@ go install github.com/Frank-Mayer/yab@latest
 
 [Latest release](https://github.com/Frank-Mayer/yab/releases/latest)
 
+## GitHub Actions
+
+```yaml
+- name: Use Yab
+  uses: Frank-Mayer/use-yab@v1.0.0
+```
+
+You can specify a version using the `version` input. The default is `latest`.
+
+```yaml
+- name: Use Yab
+  uses: Frank-Mayer/use-yab@v1.0.0
+  with:
+    version: 0.3.0
+```
+
 ## Docs
 
 Documentation is in the [DOCS.md](https://github.com/Frank-Mayer/yab/blob/main/DOCS.md) file.
