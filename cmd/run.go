@@ -19,11 +19,15 @@ var (
 		RunE: func(self *cobra.Command, args []string) error {
 			var files []string
 			argsLenAtDash := self.Flags().ArgsLenAtDash()
-			if argsLenAtDash > 0 {
+			if argsLenAtDash >= 0 {
 				files = args[:argsLenAtDash]
 				argsext.SetArgs(args[argsLenAtDash:])
 			} else {
 				files = args
+			}
+
+			if len(files) == 0 {
+				files = append(files, "init")
 			}
 
 			for _, file := range files {
