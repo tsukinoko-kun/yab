@@ -1,12 +1,32 @@
-# Documentation v0.3.0
+# Documentation v0.4.0
 
 ## Usage
 
-yab [configs ...]
+**yab run [configs ...]**
 
-yab [configs ...] -- [args ...]
+**yab run [configs ...] -- [args ...]**
 
 Configs are Lua files in your local `.yab` folder or in the global config folder.
+
+**yab [configs ...] --attach [command]**
+
+Attaches a command to the yab environment after running all given configs.
+
+**yab version**
+
+Prints the version of the program.
+
+**yab docs**
+
+Prints this documentation.
+
+**yab def**
+
+Creates definitions file in global config.
+
+**yab env**
+
+Prints the yab environment.
 
 ### Flags
 
@@ -20,35 +40,16 @@ Disables logging.
 
 ## Command Line Arguments
 
-**yab [--version, -v]**
-
-Prints the version of the program.
-
-**yab [--help, -h]**
-
-Prints this help.
-
-**yab --def**
-
-Creates definitions file in global config.
-
-**yab --env**
-
-Prints the yab environment.
-
-**yab [configs ...] --attach [command]**
-
-Attaches a command to the yab environment after running all given configs.
-
 ## Lua API Functions (in the `yab` module)
 
 ### 𝑓 use
 
-*Makes the specified package available for use in the script. Currently supported packages are: golang, nodejs, mingw, msys2.*
+_Makes the specified package available for use in the script. Currently supported packages are: golang, nodejs, mingw, msys2._
 
-**Parameters:** 
-* package `"golang"|"nodejs"|"mingw"|"msys2"`
-* version `string`
+**Parameters:**
+
+- package `"golang"|"nodejs"|"mingw"|"msys2"`
+- version `string`
 
 **Returns:** None
 
@@ -62,12 +63,13 @@ yab.use("msys2", "2024-01-13")
 
 ### 𝑓 task
 
-*Checks if the given task is up to date and if not, executes the given task. This is useful for incremental builds.*
+_Checks if the given task is up to date and if not, executes the given task. This is useful for incremental builds._
 
-**Parameters:** 
-* src `any`
-* out `any`
-* tool `function|table`
+**Parameters:**
+
+- src `any`
+- out `any`
+- tool `function|table`
 
 **Returns:** true if the toolchain was executed, false otherwise.
 
@@ -81,7 +83,7 @@ end)
 
 ### 𝑓 os_type
 
-*Returns the operating system type.*
+_Returns the operating system type._
 
 **Parameters:** None
 
@@ -89,7 +91,7 @@ end)
 
 ### 𝑓 os_arch
 
-*Returns the operating system architecture.*
+_Returns the operating system architecture._
 
 **Parameters:** None
 
@@ -97,11 +99,12 @@ end)
 
 ### 𝑓 setenv
 
-*Sets an environment variable.*
+_Sets an environment variable._
 
-**Parameters:** 
-* key `string`
-* value `string`
+**Parameters:**
+
+- key `string`
+- value `string`
 
 **Returns:** None
 
@@ -113,7 +116,7 @@ yab.setenv("FOO", "bar")
 
 ### 𝑓 args
 
-*Returns the command line arguments passed to the program.*
+_Returns the command line arguments passed to the program._
 
 **Parameters:** None
 
@@ -121,20 +124,22 @@ yab.setenv("FOO", "bar")
 
 ### 𝑓 cd
 
-*Changes the current working directory to the given path for one function call.*
+_Changes the current working directory to the given path for one function call._
 
-**Parameters:** 
-* path `string`
-* fn `function`
+**Parameters:**
+
+- path `string`
+- fn `function`
 
 **Returns:** None
 
 ### 𝑓 mkdir
 
-*Creates a new directory.*
+_Creates a new directory._
 
-**Parameters:** 
-* path `string`
+**Parameters:**
+
+- path `string`
 
 **Returns:** None
 
@@ -146,10 +151,11 @@ yab.mkdir('foo')
 
 ### 𝑓 rm
 
-*Removes a file or directory.*
+_Removes a file or directory._
 
-**Parameters:** 
-* path `string`
+**Parameters:**
+
+- path `string`
 
 **Returns:** None
 
@@ -161,11 +167,12 @@ yab.rm("./foo/bar")
 
 ### 𝑓 rm
 
-*Removes a file or directory.*
+_Removes a file or directory._
 
-**Parameters:** 
-* path `string`
-* recursive `boolean`
+**Parameters:**
+
+- path `string`
+- recursive `boolean`
 
 **Returns:** None
 
@@ -177,57 +184,63 @@ yab.rm("./foo/bar", true)
 
 ### 𝑓 check_exec
 
-*Checks if an executable is available in the system's PATH.*
+_Checks if an executable is available in the system's PATH._
 
-**Parameters:** 
-* executable `string`
+**Parameters:**
+
+- executable `string`
 
 **Returns:** true if the executable is available, false otherwise.
 
 ### 𝑓 stdall
 
-*Call a shell command and return the full output (stdout + stderr) in one string.*
+_Call a shell command and return the full output (stdout + stderr) in one string._
 
-**Parameters:** 
-* command `string`
+**Parameters:**
+
+- command `string`
 
 **Returns:** The output of the command.
 
 ### 𝑓 stdout
 
-*Call a shell command and return the output (stdout) in one string.*
+_Call a shell command and return the output (stdout) in one string._
 
-**Parameters:** 
-* command `string`
+**Parameters:**
+
+- command `string`
 
 **Returns:** The output of the command.
 
 ### 𝑓 stderr
 
-*Call a shell command and return the error output (stderr) in one string.*
+_Call a shell command and return the error output (stderr) in one string._
 
-**Parameters:** 
-* command `string`
+**Parameters:**
+
+- command `string`
 
 **Returns:** The output of the command.
 
 ### 𝑓 git_clone_or_pull
 
-*Clones a git repository to a specified destination. If the repository already exists, it will pull the latest changes instead.*
+_Clones a git repository to a specified destination. If the repository already exists, it will pull the latest changes instead._
 
-**Parameters:** 
-* url `string`
-* destination `string`
+**Parameters:**
+
+- url `string`
+- destination `string`
 
 **Returns:** None
 
 ### 𝑓 zip
 
-*Create a zip file containing the given files.*
+_Create a zip file containing the given files._
 
-**Parameters:** 
-* files `table`
-* output `string`
+**Parameters:**
+
+- files `table`
+- output `string`
 
 **Returns:** None
 
@@ -239,10 +252,11 @@ yab.zip({ "foo.txt", "bar.txt", "baz/" }, "archive.zip")
 
 ### 𝑓 download
 
-*Download a file from the internet.*
+_Download a file from the internet._
 
-**Parameters:** 
-* url `string`
+**Parameters:**
+
+- url `string`
 
 **Returns:** The name of the downloaded file.
 
@@ -254,11 +268,12 @@ yab.download("https://example.com/foo.txt")
 
 ### 𝑓 download
 
-*Download a file from the internet to a specified destination.*
+_Download a file from the internet to a specified destination._
 
-**Parameters:** 
-* url `string`
-* destination `string`
+**Parameters:**
+
+- url `string`
+- destination `string`
 
 **Returns:** The name of the downloaded file.
 
@@ -270,11 +285,12 @@ yab.download("https://example.com/foo.txt", "foo.txt")
 
 ### 𝑓 watch
 
-*Watch file or directory paths for changes and call a function when a change occurs. The callback function will be called with the file path and the event type as arguments. The event type can be one of 'create', 'write', 'remove', 'rename' or 'chmod'.*
+_Watch file or directory paths for changes and call a function when a change occurs. The callback function will be called with the file path and the event type as arguments. The event type can be one of 'create', 'write', 'remove', 'rename' or 'chmod'._
 
-**Parameters:** 
-* paths `table`
-* callback `function(string, string)`
+**Parameters:**
+
+- paths `table`
+- callback `function(string, string)`
 
 **Returns:** None
 
@@ -288,7 +304,7 @@ end)
 
 ### 𝑓 block
 
-*Block the current thread and wait for an interrupt signal.*
+_Block the current thread and wait for an interrupt signal._
 
 **Parameters:** None
 
@@ -302,10 +318,11 @@ yab.block()
 
 ### 𝑓 find
 
-*Find files matching a pattern in a directory.*
+_Find files matching a pattern in a directory._
 
-**Parameters:** 
-* pattern `string`
+**Parameters:**
+
+- pattern `string`
 
 **Returns:** A table containing the matching file paths.
 
@@ -317,11 +334,12 @@ yab.find("*.txt")
 
 ### 𝑓 find
 
-*Find files matching a pattern in a directory.*
+_Find files matching a pattern in a directory._
 
-**Parameters:** 
-* root `string`
-* pattern `string`
+**Parameters:**
+
+- root `string`
+- pattern `string`
 
 **Returns:** A table containing the matching file paths.
 
@@ -333,10 +351,11 @@ yab.find("foo", "*.txt")
 
 ### 𝑓 fileinfo
 
-*Get information about a file.*
+_Get information about a file._
 
-**Parameters:** 
-* path `string`
+**Parameters:**
+
+- path `string`
 
 **Returns:** A table containing the file information (name, size, mode, modtime, isdir, sys). See https://pkg.go.dev/io/fs#FileInfo for details.
 
@@ -349,10 +368,11 @@ print(foo_info.size)
 
 ### 𝑓 pretty
 
-*Pretty print a table.*
+_Pretty print a table._
 
-**Parameters:** 
-* value `any`
+**Parameters:**
+
+- value `any`
 
 **Returns:** A string representation of the table.
 
@@ -364,10 +384,11 @@ yab.pretty({foo = "bar", baz = "qux"})
 
 ### 𝑓 print
 
-*Pretty print a table.*
+_Pretty print a table._
 
-**Parameters:** 
-* value `any`
+**Parameters:**
+
+- value `any`
 
 **Returns:** None
 
@@ -376,4 +397,3 @@ yab.pretty({foo = "bar", baz = "qux"})
 ```lua
 yab.print({foo = "bar", baz = "qux"})
 ```
-

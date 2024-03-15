@@ -16,7 +16,14 @@ import (
 func GetInitFile(configPath string, file string) (string, error) {
 	initFile := filepath.Join(configPath, file+".lua")
 	if _, err := os.Stat(initFile); err != nil {
-		return "", err
+		if os.IsNotExist(err) {
+			initFile = filepath.Join(configPath, file, "init.lua")
+			if _, err2 := os.Stat(initFile); err2 != nil {
+				return "", err
+			}
+		} else {
+			return "", err
+		}
 	}
 	return initFile, nil
 }

@@ -143,14 +143,14 @@ go install github.com/Frank-Mayer/yab@latest
 
 ```yaml
 - name: Use Yab
-  uses: Frank-Mayer/use-yab@v1.0.0
+  uses: Frank-Mayer/use-yab@v1
 ```
 
 You can specify a version using the `version` input. The default is `latest`.
 
 ```yaml
 - name: Use Yab
-  uses: Frank-Mayer/use-yab@v1.0.0
+  uses: Frank-Mayer/use-yab@v1
   with:
     version: 0.3.0
 ```
