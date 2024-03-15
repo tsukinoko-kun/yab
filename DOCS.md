@@ -1,4 +1,4 @@
-# Documentation v0.4.0
+# Documentation v0.4.1
 
 ## Usage
 
@@ -44,12 +44,11 @@ Disables logging.
 
 ### 𝑓 use
 
-_Makes the specified package available for use in the script. Currently supported packages are: golang, nodejs, mingw, msys2._
+*Makes the specified package available for use in the script. Currently supported packages are: golang, nodejs, mingw, msys2.*
 
-**Parameters:**
-
-- package `"golang"|"nodejs"|"mingw"|"msys2"`
-- version `string`
+**Parameters:** 
+* package `"golang"|"nodejs"|"mingw"|"msys2"`
+* version `string`
 
 **Returns:** None
 
@@ -63,13 +62,12 @@ yab.use("msys2", "2024-01-13")
 
 ### 𝑓 task
 
-_Checks if the given task is up to date and if not, executes the given task. This is useful for incremental builds._
+*Checks if the given task is up to date and if not, executes the given task. This is useful for incremental builds.*
 
-**Parameters:**
-
-- src `any`
-- out `any`
-- tool `function|table`
+**Parameters:** 
+* src `any`
+* out `any`
+* tool `function|table`
 
 **Returns:** true if the toolchain was executed, false otherwise.
 
@@ -83,7 +81,7 @@ end)
 
 ### 𝑓 os_type
 
-_Returns the operating system type._
+*Returns the operating system type.*
 
 **Parameters:** None
 
@@ -91,7 +89,7 @@ _Returns the operating system type._
 
 ### 𝑓 os_arch
 
-_Returns the operating system architecture._
+*Returns the operating system architecture.*
 
 **Parameters:** None
 
@@ -99,12 +97,11 @@ _Returns the operating system architecture._
 
 ### 𝑓 setenv
 
-_Sets an environment variable._
+*Sets an environment variable.*
 
-**Parameters:**
-
-- key `string`
-- value `string`
+**Parameters:** 
+* key `string`
+* value `string`
 
 **Returns:** None
 
@@ -116,7 +113,7 @@ yab.setenv("FOO", "bar")
 
 ### 𝑓 args
 
-_Returns the command line arguments passed to the program._
+*Returns the command line arguments passed to the program.*
 
 **Parameters:** None
 
@@ -124,22 +121,20 @@ _Returns the command line arguments passed to the program._
 
 ### 𝑓 cd
 
-_Changes the current working directory to the given path for one function call._
+*Changes the current working directory to the given path for one function call.*
 
-**Parameters:**
-
-- path `string`
-- fn `function`
+**Parameters:** 
+* path `string`
+* fn `function`
 
 **Returns:** None
 
 ### 𝑓 mkdir
 
-_Creates a new directory._
+*Creates a new directory.*
 
-**Parameters:**
-
-- path `string`
+**Parameters:** 
+* path `string`
 
 **Returns:** None
 
@@ -151,11 +146,10 @@ yab.mkdir('foo')
 
 ### 𝑓 rm
 
-_Removes a file or directory._
+*Removes a file or directory.*
 
-**Parameters:**
-
-- path `string`
+**Parameters:** 
+* path `string`
 
 **Returns:** None
 
@@ -167,12 +161,11 @@ yab.rm("./foo/bar")
 
 ### 𝑓 rm
 
-_Removes a file or directory._
+*Removes a file or directory.*
 
-**Parameters:**
-
-- path `string`
-- recursive `boolean`
+**Parameters:** 
+* path `string`
+* recursive `boolean`
 
 **Returns:** None
 
@@ -184,63 +177,57 @@ yab.rm("./foo/bar", true)
 
 ### 𝑓 check_exec
 
-_Checks if an executable is available in the system's PATH._
+*Checks if an executable is available in the system's PATH.*
 
-**Parameters:**
-
-- executable `string`
+**Parameters:** 
+* executable `string`
 
 **Returns:** true if the executable is available, false otherwise.
 
 ### 𝑓 stdall
 
-_Call a shell command and return the full output (stdout + stderr) in one string._
+*Call a shell command and return the full output (stdout + stderr) in one string.*
 
-**Parameters:**
-
-- command `string`
+**Parameters:** 
+* command `string`
 
 **Returns:** The output of the command.
 
 ### 𝑓 stdout
 
-_Call a shell command and return the output (stdout) in one string._
+*Call a shell command and return the output (stdout) in one string.*
 
-**Parameters:**
-
-- command `string`
+**Parameters:** 
+* command `string`
 
 **Returns:** The output of the command.
 
 ### 𝑓 stderr
 
-_Call a shell command and return the error output (stderr) in one string._
+*Call a shell command and return the error output (stderr) in one string.*
 
-**Parameters:**
-
-- command `string`
+**Parameters:** 
+* command `string`
 
 **Returns:** The output of the command.
 
 ### 𝑓 git_clone_or_pull
 
-_Clones a git repository to a specified destination. If the repository already exists, it will pull the latest changes instead._
+*Clones a git repository to a specified destination. If the repository already exists, it will pull the latest changes instead.*
 
-**Parameters:**
-
-- url `string`
-- destination `string`
+**Parameters:** 
+* url `string`
+* destination `string`
 
 **Returns:** None
 
 ### 𝑓 zip
 
-_Create a zip file containing the given files._
+*Create a zip file containing the given files.*
 
-**Parameters:**
-
-- files `table`
-- output `string`
+**Parameters:** 
+* files `table`
+* output `string`
 
 **Returns:** None
 
@@ -252,11 +239,10 @@ yab.zip({ "foo.txt", "bar.txt", "baz/" }, "archive.zip")
 
 ### 𝑓 download
 
-_Download a file from the internet._
+*Download a file from the internet.*
 
-**Parameters:**
-
-- url `string`
+**Parameters:** 
+* url `string`
 
 **Returns:** The name of the downloaded file.
 
@@ -268,12 +254,11 @@ yab.download("https://example.com/foo.txt")
 
 ### 𝑓 download
 
-_Download a file from the internet to a specified destination._
+*Download a file from the internet to a specified destination.*
 
-**Parameters:**
-
-- url `string`
-- destination `string`
+**Parameters:** 
+* url `string`
+* destination `string`
 
 **Returns:** The name of the downloaded file.
 
@@ -285,12 +270,11 @@ yab.download("https://example.com/foo.txt", "foo.txt")
 
 ### 𝑓 watch
 
-_Watch file or directory paths for changes and call a function when a change occurs. The callback function will be called with the file path and the event type as arguments. The event type can be one of 'create', 'write', 'remove', 'rename' or 'chmod'._
+*Watch file or directory paths for changes and call a function when a change occurs. The callback function will be called with the file path and the event type as arguments. The event type can be one of 'create', 'write', 'remove', 'rename' or 'chmod'.*
 
-**Parameters:**
-
-- paths `table`
-- callback `function(string, string)`
+**Parameters:** 
+* paths `table`
+* callback `function(string, string)`
 
 **Returns:** None
 
@@ -304,7 +288,7 @@ end)
 
 ### 𝑓 block
 
-_Block the current thread and wait for an interrupt signal._
+*Block the current thread and wait for an interrupt signal.*
 
 **Parameters:** None
 
@@ -318,11 +302,10 @@ yab.block()
 
 ### 𝑓 find
 
-_Find files matching a pattern in a directory._
+*Find files matching a pattern in a directory.*
 
-**Parameters:**
-
-- pattern `string`
+**Parameters:** 
+* pattern `string`
 
 **Returns:** A table containing the matching file paths.
 
@@ -334,12 +317,11 @@ yab.find("*.txt")
 
 ### 𝑓 find
 
-_Find files matching a pattern in a directory._
+*Find files matching a pattern in a directory.*
 
-**Parameters:**
-
-- root `string`
-- pattern `string`
+**Parameters:** 
+* root `string`
+* pattern `string`
 
 **Returns:** A table containing the matching file paths.
 
@@ -351,11 +333,10 @@ yab.find("foo", "*.txt")
 
 ### 𝑓 fileinfo
 
-_Get information about a file._
+*Get information about a file.*
 
-**Parameters:**
-
-- path `string`
+**Parameters:** 
+* path `string`
 
 **Returns:** A table containing the file information (name, size, mode, modtime, isdir, sys). See https://pkg.go.dev/io/fs#FileInfo for details.
 
@@ -368,11 +349,10 @@ print(foo_info.size)
 
 ### 𝑓 pretty
 
-_Pretty print a table._
+*Pretty print a table.*
 
-**Parameters:**
-
-- value `any`
+**Parameters:** 
+* value `any`
 
 **Returns:** A string representation of the table.
 
@@ -384,11 +364,10 @@ yab.pretty({foo = "bar", baz = "qux"})
 
 ### 𝑓 print
 
-_Pretty print a table._
+*Pretty print a table.*
 
-**Parameters:**
-
-- value `any`
+**Parameters:** 
+* value `any`
 
 **Returns:** None
 
@@ -397,3 +376,4 @@ _Pretty print a table._
 ```lua
 yab.print({foo = "bar", baz = "qux"})
 ```
+

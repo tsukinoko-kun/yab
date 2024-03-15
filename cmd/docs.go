@@ -5,7 +5,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// docsCmd represents the docs command
 var docsCmd = &cobra.Command{
 	Use:     "docs",
 	Aliases: []string{"help"},

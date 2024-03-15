@@ -164,13 +164,13 @@ Documentation is in the [DOCS.md](https://github.com/Frank-Mayer/yab/blob/main/D
 Run one or more configs:
 
 ```bash
-yab [configs ...]
+yab run [configs ...]
 ```
 
 Pass arguments to the scripts:
 
 ```bash
-yab [configs ...] -- [args ...]
+yab run [configs ...] -- [args ...]
 ```
 
 A config is a lua file inside the config directory.
@@ -184,7 +184,7 @@ The following directories are used as configs (first found wins)
 
 ## Lua definitions
 
-Run `yab --def` to create a definitions file in your global config directory.
+Run `yab def` to create a definitions file in your global config directory.
 Use this to configure your Lua language server.
 
 Global config is one of those directories:

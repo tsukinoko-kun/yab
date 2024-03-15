@@ -9,7 +9,7 @@ import (
 )
 
 // usable is an array of usable packages
-var Usable = []string{"golang", "nodejs", "mingw", "msys2"}
+var Usable = []string{packageGoName, "nodejs", "mingw", "msys2"}
 
 func Use(l *lua.LState) int {
 	pack := l.CheckString(1)
@@ -34,7 +34,7 @@ func use(pack string, version string) error {
 	}
 	log.Debug("Ensuring", "package", pack, "version", version)
 	switch pack {
-	case "golang":
+	case packageGoName:
 		return useGo(version)
 	case "nodejs":
 		return useNode(version)

@@ -17,24 +17,6 @@ var (
 		Short: "Run a configuration",
 		Long:  "Run a configuration lua file",
 		RunE: func(self *cobra.Command, args []string) error {
-			var err error
-
-			mainutil.Prepare()
-
-			if self.Flags().Changed("debug") {
-				log.SetLevel(log.DebugLevel)
-			} else if self.Flags().Changed("silent") {
-				log.SetLevel(log.ErrorLevel)
-			} else {
-				log.SetLevel(log.WarnLevel)
-			}
-
-			defer util.RestoreEnv()
-
-			if util.ConfigPath, err = mainutil.GetConfigPath(); err != nil {
-				return err
-			}
-
 			var files []string
 			argsLenAtDash := self.Flags().ArgsLenAtDash()
 			if argsLenAtDash > 0 {
@@ -76,7 +58,5 @@ var (
 
 func init() {
 	runCmd.Flags().String("attach", "", "Attach a command to run after the configuration files.")
-	runCmd.Flags().Bool("debug", false, "Enable debug logging.")
-	runCmd.Flags().Bool("silent", false, "Disable logging.")
 	rootCmd.AddCommand(runCmd)
 }

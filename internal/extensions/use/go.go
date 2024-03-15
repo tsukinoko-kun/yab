@@ -12,8 +12,10 @@ import (
 	"github.com/pkg/errors"
 )
 
+const packageGoName = "golang"
+
 func useGo(version string) error {
-	p, err := cache.InstallPath("go", version)
+	p, err := cache.InstallPath(packageGoName, version)
 	if err != nil {
 		return errors.Wrap(err, fmt.Sprintf("Error getting install path for go version '%s'", version))
 	}
@@ -28,7 +30,7 @@ func useGo(version string) error {
 		}
 	}()
 
-	if ok, err := cache.LookupInstall("go", version); err == nil {
+	if ok, err := cache.LookupInstall(packageGoName, version); err == nil {
 		if ok {
 			log.Debug("Go version already installed", "version", version)
 			return nil
@@ -37,7 +39,7 @@ func useGo(version string) error {
 		return errors.Wrap(err, fmt.Sprintf("Error checking cache for go version '%s'", version))
 	}
 
-	log.Info("Installing dependency", "package", "go", "version", version)
+	log.Info("Installing dependency", "package", packageGoName, "version", version)
 
 	var filename string
 	if runtime.GOOS == "windows" {

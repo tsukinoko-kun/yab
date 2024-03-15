@@ -3,10 +3,12 @@ package cmd
 import (
 	"os"
 
+	"github.com/Frank-Mayer/yab/internal/mainutil"
+	"github.com/Frank-Mayer/yab/internal/util"
+	"github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
 )
 
-// rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "yab",
 	Short: "Yet another build tool",
@@ -14,10 +16,26 @@ var rootCmd = &cobra.Command{
 Regardless of operating system, programming language...
 Yab is just that.
 Use Lua scripts to define specific actions and execute them from the command line.`,
+	PersistentPreRunE: func(cmd *cobra.Command, _ []string) error {
+		mainutil.Prepare()
+
+		if cmd.Flags().Changed("debug") {
+			log.SetLevel(log.DebugLevel)
+		} else if cmd.Flags().Changed("silent") {
+			log.SetLevel(log.ErrorLevel)
+		} else {
+			log.SetLevel(log.WarnLevel)
+		}
+
+		var err error
+		util.ConfigPath, err = mainutil.GetConfigPath()
+		return err
+	},
+	PersistentPostRun: func(_ *cobra.Command, _ []string) {
+		util.RestoreEnv()
+	},
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
@@ -26,5 +44,6 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.PersistentFlags().Bool("debug", false, "Enable debug output")
+	rootCmd.PersistentFlags().Bool("silent", false, "Silent output")
 }
