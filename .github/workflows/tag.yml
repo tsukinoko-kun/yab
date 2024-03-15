@@ -98,4 +98,5 @@ jobs:
           go run . version
           current=v$(go run . version)
           git tag -a $current -m "Release $current"
-          git push origin $current
+          git push
+          git push --tags
