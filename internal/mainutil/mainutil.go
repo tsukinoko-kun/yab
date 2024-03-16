@@ -59,11 +59,13 @@ func GetConfigPath() (string, error) {
 
 	for {
 		pathname := filepath.Join(rootPath, ".yab")
-		if _, err := os.Stat(pathname); !os.IsNotExist(err) {
+		if _, err := os.Stat(pathname); err == nil {
 			if err := os.Chdir(filepath.Dir(pathname)); err != nil {
 				return pathname, err
 			}
 			return pathname, nil
+		} else if !os.IsNotExist(err) {
+			return "", err
 		}
 		// parent directory
 		parent := filepath.Dir(rootPath)
