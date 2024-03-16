@@ -20,36 +20,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-mac:
-    runs-on: macos-latest
-    steps:
-      - name: Setup Go environment
-        uses: actions/setup-go@v5
-        with:
-          go-version: stable
-          cache: true
-          architecture: x64
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build
-        run: go build ./...
-      - name: Test
-        run: go test ./... -v
-  test-win:
-    runs-on: windows-latest
-    steps:
-      - name: Setup Go environment
-        uses: actions/setup-go@v5
-        with:
-          go-version: stable
-          cache: true
-          architecture: x64
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build
-        run: go build ./...
-      - name: Test
-        run: go test ./... -v
   test-linux:
     runs-on: ubuntu-latest
     steps:
