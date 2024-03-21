@@ -114,46 +114,11 @@ It is easy to get the build working on different platforms.
 
 ---
 
-Lua is a common and performant language.
+Lua is a common and performant programming language.
 Yab offers some useful functions in addition to the Lua standard library that might be useful when building configurations.
 
 Looking for an example configuration?
 Take a look at [this projects `.yab` folder](https://github.com/Frank-Mayer/yab/tree/main/.yab).
-
-## Installation
-
-### Homebrew
-
-```sh
-brew tap Frank-Mayer/tap
-brew install Frank-Mayer/tap/yab
-```
-
-### Go install
-
-```bash
-go install github.com/Frank-Mayer/yab@latest
-```
-
-### Binary from release
-
-[Latest release](https://github.com/Frank-Mayer/yab/releases/latest)
-
-## GitHub Actions
-
-```yaml
-- name: Use Yab
-  uses: Frank-Mayer/use-yab@v1
-```
-
-You can specify a version using the `version` input. The default is `latest`.
-
-```yaml
-- name: Use Yab
-  uses: Frank-Mayer/use-yab@v1
-  with:
-    version: 0.3.0
-```
 
 ## Docs
 
@@ -182,10 +147,14 @@ The following directories are used as configs (first found wins)
 1. `$APPDATA/yab/`
 1. `$HOME/.config/yab/`
 
+If you run `yab run` without any arguments, the default config (`init.lua`) is used.
+
 ## Lua definitions
 
-Run `yab def` to create a definitions file in your global config directory.
-Use this to configure your Lua language server.
+You can use a Lua language server to get autocompletion and type checking.
+
+Run `yab def` to create a definitions file in your **global** config directory.
+Add it to your Lua language server configuration.
 
 Global config is one of those directories:
 
@@ -222,7 +191,48 @@ yab.use("nodejs", "20.11.1")
 
 I now can start a shell using the specified environment using `yab env --attach sh` or start neovim using `yab env --attach nvim`.
 
+## Installation
+
+### Homebrew
+
+```sh
+brew tap Frank-Mayer/tap
+brew install Frank-Mayer/tap/yab
+```
+
+### Go install
+
+```bash
+go install github.com/Frank-Mayer/yab@latest
+```
+
+### Binary from release
+
+[Latest release](https://github.com/Frank-Mayer/yab/releases/latest)
+
+## GitHub Actions
+
+```yaml
+- name: Use Yab
+  uses: Frank-Mayer/use-yab@v1
+```
+
+You can specify a version using the `version` input. The default is `latest`.
+
+```yaml
+- name: Use Yab
+  uses: Frank-Mayer/use-yab@v1
+  with:
+      version: 0.3.0
+```
+
 ## Badge
+
+Use the badge to show that your project uses Yab.
+This helps to spread the word about Yab and makes it easier for others to work on your project.
+
+This is just a suggestion.
+You don't have to use it.
 
 [![Yab Project](https://img.shields.io/badge/Yab_Project-2C2D72?logo=lua)](https://github.com/Frank-Mayer/yab)
 
