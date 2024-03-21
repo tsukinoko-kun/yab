@@ -189,7 +189,7 @@ yab.use("golang", "1.21.6")
 yab.use("nodejs", "20.11.1")
 ```
 
-I now can start a shell using the specified environment using `yab env --attach sh` or start neovim using `yab env --attach nvim`.
+I now can start a shell using the specified environment using `yab run env --attach sh` or start neovim using `yab run env --attach nvim`.
 
 ## Installation
 
