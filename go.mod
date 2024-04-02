@@ -3,7 +3,7 @@ module github.com/Frank-Mayer/yab
 go 1.22.1
 
 require (
-	github.com/Frank-Mayer/ohmygosh v0.1.0
+	github.com/Frank-Mayer/ohmygosh v0.1.1
 	github.com/charmbracelet/bubbles v0.18.0
 	github.com/charmbracelet/bubbletea v0.25.0
 	github.com/charmbracelet/glamour v0.6.0
@@ -12,6 +12,7 @@ require (
 	github.com/go-git/go-git/v5 v5.11.0
 	github.com/pkg/errors v0.9.1
 	github.com/segmentio/fasthash v1.0.3
+	github.com/spf13/cobra v1.8.0
 )
 
 require (
@@ -49,7 +50,6 @@ require (
 	github.com/rivo/uniseg v0.4.6 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/skeema/knownhosts v1.2.1 // indirect
-	github.com/spf13/cobra v1.8.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	github.com/yuin/goldmark v1.5.5 // indirect
