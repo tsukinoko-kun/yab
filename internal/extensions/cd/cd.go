@@ -4,7 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
-	lua "github.com/Frank-Mayer/yab/internal/lua"
+	"github.com/Frank-Mayer/gopher-lua"
 )
 
 // Cd changes the current working directory to the given path for one function call.

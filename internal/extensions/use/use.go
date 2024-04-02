@@ -3,7 +3,7 @@ package use
 import (
 	"fmt"
 
-	lua "github.com/Frank-Mayer/yab/internal/lua"
+	"github.com/Frank-Mayer/gopher-lua"
 	"github.com/Frank-Mayer/yab/internal/util"
 	"github.com/charmbracelet/log"
 )

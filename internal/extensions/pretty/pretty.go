@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	lua "github.com/Frank-Mayer/yab/internal/lua"
+	"github.com/Frank-Mayer/gopher-lua"
 )
 
 func Pretty(l *lua.LState) int {

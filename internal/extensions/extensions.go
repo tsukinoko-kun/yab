@@ -3,6 +3,7 @@ package extensions
 import (
 	"strings"
 
+	"github.com/Frank-Mayer/gopher-lua"
 	"github.com/Frank-Mayer/yab/internal/extensions/args"
 	"github.com/Frank-Mayer/yab/internal/extensions/block"
 	"github.com/Frank-Mayer/yab/internal/extensions/cd"
@@ -22,7 +23,6 @@ import (
 	"github.com/Frank-Mayer/yab/internal/extensions/use"
 	"github.com/Frank-Mayer/yab/internal/extensions/watch"
 	"github.com/Frank-Mayer/yab/internal/extensions/zip"
-	"github.com/Frank-Mayer/yab/internal/lua"
 	"github.com/Frank-Mayer/yab/internal/util"
 )
 

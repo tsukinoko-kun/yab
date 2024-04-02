@@ -3,7 +3,7 @@ package download
 import (
 	"strings"
 
-	lua "github.com/Frank-Mayer/yab/internal/lua"
+	"github.com/Frank-Mayer/gopher-lua"
 	"github.com/Frank-Mayer/yab/internal/util"
 )
 

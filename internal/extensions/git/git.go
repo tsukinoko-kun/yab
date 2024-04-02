@@ -6,7 +6,7 @@ import (
 	"errors"
 	"path/filepath"
 
-	"github.com/Frank-Mayer/yab/internal/lua"
+	"github.com/Frank-Mayer/gopher-lua"
 	"github.com/charmbracelet/log"
 	"github.com/go-git/go-git/v5"
 )

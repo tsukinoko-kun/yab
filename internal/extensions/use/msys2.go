@@ -9,8 +9,8 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/Frank-Mayer/gopher-lua/shell"
 	"github.com/Frank-Mayer/yab/internal/cache"
-	"github.com/Frank-Mayer/yab/internal/shell"
 	"github.com/Frank-Mayer/yab/internal/util"
 	"github.com/charmbracelet/log"
 	"github.com/pkg/errors"

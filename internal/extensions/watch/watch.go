@@ -1,7 +1,7 @@
 package watch
 
 import (
-	"github.com/Frank-Mayer/yab/internal/lua"
+	"github.com/Frank-Mayer/gopher-lua"
 	"github.com/charmbracelet/log"
 	"github.com/fsnotify/fsnotify"
 )

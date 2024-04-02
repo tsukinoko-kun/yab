@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/Frank-Mayer/yab/internal/shell"
+	"github.com/Frank-Mayer/gopher-lua/shell"
 )
 
 func System(cmdStr string) *exec.Cmd {
