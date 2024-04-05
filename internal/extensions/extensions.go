@@ -16,6 +16,7 @@ import (
 	"github.com/Frank-Mayer/yab/internal/extensions/mkdir"
 	"github.com/Frank-Mayer/yab/internal/extensions/osarch"
 	"github.com/Frank-Mayer/yab/internal/extensions/ostype"
+	"github.com/Frank-Mayer/yab/internal/extensions/parallel"
 	"github.com/Frank-Mayer/yab/internal/extensions/pretty"
 	"github.com/Frank-Mayer/yab/internal/extensions/rm"
 	"github.com/Frank-Mayer/yab/internal/extensions/std"
@@ -63,6 +64,23 @@ var Functions = []Function{
 		"yab.task({ \"foo.c\" }, { \"foo.o\" }, function()\n" +
 			"\tos.execute(\"gcc -c foo.c -o foo.o\")\n" +
 			"end)",
+	},
+
+	{
+		"parallel",
+		"Execute a set of functions in parallel.",
+		[]string{"... function"},
+		[]string{"The number of functions executed."},
+		parallel.Parallel,
+		"",
+		"yab.parallel(\n" +
+			"\tfunction()\n" +
+			"\t\tyab.print(\"Task 1\")\n" +
+			"\tend,\n" +
+			"\tfunction()\n" +
+			"\t\tyab.print(\"Task 2\")\n" +
+			"\tend\n" +
+			")",
 	},
 
 	{
@@ -308,12 +326,23 @@ func Definitions() string {
 			sb.WriteString(p)
 			sb.WriteString("\n")
 		}
-		sb.WriteString("---@return ")
-		sb.WriteString(f.Ret)
-		sb.WriteString("\n")
+		if len(f.Ret) > 0 {
+			sb.WriteString("---@return ")
+			sb.WriteString(f.Ret)
+			sb.WriteString("\n")
+		}
 		sb.WriteString("---")
 		sb.WriteString(f.Description)
 		sb.WriteString("\n")
+		if f.Example != "" {
+			sb.WriteString("---\n---```lua\n")
+			for _, l := range strings.Split(f.Example, "\n") {
+				sb.WriteString("---")
+				sb.WriteString(l)
+				sb.WriteString("\n")
+			}
+			sb.WriteString("---```\n---\n")
+		}
 		sb.WriteString("yab.")
 		sb.WriteString(f.Name)
 		sb.WriteString(" = function(")
