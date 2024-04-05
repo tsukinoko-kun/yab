@@ -1,4 +1,4 @@
-# Documentation v0.5.0
+# Documentation v0.6.0
 
 ## Usage
 
@@ -77,6 +77,28 @@ yab.use("msys2", "2024-01-13")
 yab.task({ "foo.c" }, { "foo.o" }, function()
 	os.execute("gcc -c foo.c -o foo.o")
 end)
+```
+
+### 𝑓 parallel
+
+*Execute a set of functions in parallel.*
+
+**Parameters:** 
+* ... `function`
+
+**Returns:** The number of functions executed.
+
+**Example:**
+
+```lua
+yab.parallel(
+	function()
+		yab.print("Task 1")
+	end,
+	function()
+		yab.print("Task 2")
+	end
+)
 ```
 
 ### 𝑓 os_type
