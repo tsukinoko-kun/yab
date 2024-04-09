@@ -3,12 +3,19 @@ package cd
 import (
 	"os"
 	"path/filepath"
+	"sync"
 
 	"github.com/Frank-Mayer/gopher-lua"
 )
 
+// mutex is used to prevent concurrent calls to change the current working directory.
+var mutex = &sync.Mutex{}
+
 // Cd changes the current working directory to the given path for one function call.
 func Cd(l *lua.LState) int {
+	mutex.Lock()
+	defer mutex.Unlock()
+
 	path := l.CheckString(1)
 	fn := l.CheckFunction(2)
 

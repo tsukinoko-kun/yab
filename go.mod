@@ -1,6 +1,6 @@
 module github.com/Frank-Mayer/yab
 
-go 1.22.1
+go 1.22.2
 
 require (
 	github.com/Frank-Mayer/gopher-lua v1.2.0
