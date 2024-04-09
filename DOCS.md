@@ -8,7 +8,9 @@
 
 Configs are Lua files in your local `.yab` folder or in the global config folder.
 
-**`yab [configs ...] --attach [command]`**
+**`yab run [configs ...] --attach [command]`**
+
+**`yab run [configs ...] --attach [command] -- [args ...]`**
 
 Attaches a command to the yab environment after running all given configs.
 
@@ -397,8 +399,5 @@ yab.pretty({foo = "bar", baz = "qux"})
 
 ```lua
 yab.print({foo = "bar", baz = "qux"})
-```
-
-.print({foo = "bar", baz = "qux"})
 ```
 
