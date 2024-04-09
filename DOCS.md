@@ -2,39 +2,39 @@
 
 ## Usage
 
-**yab run [configs ...]**
+**`yab run [configs ...]`**
 
-**yab run [configs ...] -- [args ...]**
+**`yab run [configs ...] -- [args ...]`**
 
 Configs are Lua files in your local `.yab` folder or in the global config folder.
 
-**yab [configs ...] --attach [command]**
+**`yab [configs ...] --attach [command]`**
 
 Attaches a command to the yab environment after running all given configs.
 
-**yab version**
+**`yab version`**
 
 Prints the version of the program.
 
-**yab docs**
+**`yab docs`**
 
 Prints this documentation.
 
-**yab def**
+**`yab def`**
 
 Creates definitions file in global config.
 
-**yab env**
+**`yab env`**
 
 Prints the yab environment.
 
 ### Flags
 
-**--debug**
+**`--debug`**
 
 Enables debug logging.
 
-**--silent**
+**`--silent`**
 
 Disables logging.
 
@@ -397,5 +397,8 @@ yab.pretty({foo = "bar", baz = "qux"})
 
 ```lua
 yab.print({foo = "bar", baz = "qux"})
+```
+
+.print({foo = "bar", baz = "qux"})
 ```
 
