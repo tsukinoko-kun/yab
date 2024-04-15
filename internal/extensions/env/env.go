@@ -3,7 +3,7 @@ package env
 import (
 	"os"
 
-	"github.com/Frank-Mayer/gopher-lua"
+	"github.com/tsukinoko-kun/gopher-lua"
 )
 
 func SetEnv(l *lua.LState) int {

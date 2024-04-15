@@ -4,9 +4,9 @@ Yet another build tool :construction_worker: :construction:
 
 [![Homebrew](https://img.shields.io/badge/Homebrew-FBB040?logo=homebrew&logoColor=000)](#homebrew)
 
-[![Latest Release)](https://img.shields.io/github/v/release/Frank-Mayer/yab?logo=github)](https://github.com/Frank-Mayer/yab/releases/latest)
+[![Latest Release)](https://img.shields.io/github/v/release/tsukinoko-kun/yab?logo=github)](https://github.com/tsukinoko-kun/yab/releases/latest)
 
-[![CodeQL](https://github.com/Frank-Mayer/yab/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Frank-Mayer/yab/actions/workflows/github-code-scanning/codeql)
+[![CodeQL](https://github.com/tsukinoko-kun/yab/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/tsukinoko-kun/yab/actions/workflows/github-code-scanning/codeql)
 
 Wouldn't it be great if you could use the same build tool for every project?
 Regardless of operating system, programming language...
@@ -118,11 +118,11 @@ Lua is a common and performant programming language.
 Yab offers some useful functions in addition to the Lua standard library that might be useful when building configurations.
 
 Looking for an example configuration?
-Take a look at [this projects `.yab` folder](https://github.com/Frank-Mayer/yab/tree/main/.yab).
+Take a look at [this projects `.yab` folder](https://github.com/tsukinoko-kun/yab/tree/main/.yab).
 
 ## Docs
 
-Documentation is in the [DOCS.md](https://github.com/Frank-Mayer/yab/blob/main/DOCS.md) file.
+Documentation is in the [DOCS.md](https://github.com/tsukinoko-kun/yab/blob/main/DOCS.md) file.
 
 ## Usage
 
@@ -196,32 +196,32 @@ I now can start a shell using the specified environment using `yab run env --att
 ### Homebrew
 
 ```sh
-brew tap Frank-Mayer/tap
-brew install Frank-Mayer/tap/yab
+brew tap tsukinoko-kun/tap
+brew install tsukinoko-kun/tap/yab
 ```
 
 ### Go install
 
 ```bash
-go install github.com/Frank-Mayer/yab@latest
+go install github.com/tsukinoko-kun/yab@latest
 ```
 
 ### Binary from release
 
-[Latest release](https://github.com/Frank-Mayer/yab/releases/latest)
+[Latest release](https://github.com/tsukinoko-kun/yab/releases/latest)
 
 ## GitHub Actions
 
 ```yaml
 - name: Use Yab
-  uses: Frank-Mayer/use-yab@v1
+  uses: tsukinoko-kun/use-yab@v1
 ```
 
 You can specify a version using the `version` input. The default is `latest`.
 
 ```yaml
 - name: Use Yab
-  uses: Frank-Mayer/use-yab@v1
+  uses: tsukinoko-kun/use-yab@v1
   with:
       version: 0.3.0
 ```
@@ -234,8 +234,8 @@ This helps to spread the word about Yab and makes it easier for others to work o
 This is just a suggestion.
 You don't have to use it.
 
-[![Yab Project](https://img.shields.io/badge/Yab_Project-2C2D72?logo=lua)](https://github.com/Frank-Mayer/yab)
+[![Yab Project](https://img.shields.io/badge/Yab_Project-2C2D72?logo=lua)](https://github.com/tsukinoko-kun/yab)
 
 ```markdown
-[![Yab Project](https://img.shields.io/badge/Yab_Project-2C2D72?logo=lua)](https://github.com/Frank-Mayer/yab)
+[![Yab Project](https://img.shields.io/badge/Yab_Project-2C2D72?logo=lua)](https://github.com/tsukinoko-kun/yab)
 ```

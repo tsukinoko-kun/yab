@@ -1,9 +1,8 @@
-module github.com/Frank-Mayer/yab
+module github.com/tsukinoko-kun/yab
 
 go 1.22.2
 
 require (
-	github.com/Frank-Mayer/gopher-lua v1.2.0
 	github.com/charmbracelet/bubbles v0.18.0
 	github.com/charmbracelet/bubbletea v0.25.0
 	github.com/charmbracelet/glamour v0.6.0
@@ -13,11 +12,11 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/segmentio/fasthash v1.0.3
 	github.com/spf13/cobra v1.8.0
+	github.com/tsukinoko-kun/gopher-lua v1.2.2
 )
 
 require (
 	dario.cat/mergo v1.0.0 // indirect
-	github.com/Frank-Mayer/ohmygosh v0.1.1 // indirect
 	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/ProtonMail/go-crypto v0.0.0-20230828082145-3c4c8a2d2371 // indirect
 	github.com/alecthomas/chroma v0.10.0 // indirect
@@ -52,6 +51,7 @@ require (
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/skeema/knownhosts v1.2.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/tsukinoko-kun/ohmygosh v0.2.1 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	github.com/yuin/goldmark v1.5.2 // indirect
 	github.com/yuin/goldmark-emoji v1.0.1 // indirect
@@ -60,7 +60,7 @@ require (
 	golang.org/x/mod v0.13.0 // indirect
 	golang.org/x/net v0.19.0 // indirect
 	golang.org/x/sync v0.4.0 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sys v0.19.0 // indirect
 	golang.org/x/term v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/tools v0.14.0 // indirect

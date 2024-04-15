@@ -1,7 +1,7 @@
 package find
 
 import (
-	"github.com/Frank-Mayer/gopher-lua"
+	"github.com/tsukinoko-kun/gopher-lua"
 
 	"os"
 	"path/filepath"

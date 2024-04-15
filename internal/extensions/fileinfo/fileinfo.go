@@ -3,7 +3,7 @@ package fileinfo
 import (
 	"os"
 
-	"github.com/Frank-Mayer/gopher-lua"
+	"github.com/tsukinoko-kun/gopher-lua"
 )
 
 func FileInfo(l *lua.LState) int {

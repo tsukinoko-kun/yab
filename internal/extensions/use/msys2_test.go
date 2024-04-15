@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Frank-Mayer/yab/internal/extensions/use"
+	"github.com/tsukinoko-kun/yab/internal/extensions/use"
 )
 
 func TestWinToPosixPath(t *testing.T) {

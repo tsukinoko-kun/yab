@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/Frank-Mayer/yab/internal/cache"
-	"github.com/Frank-Mayer/yab/internal/util"
+	"github.com/tsukinoko-kun/yab/internal/cache"
+	"github.com/tsukinoko-kun/yab/internal/util"
 	"github.com/charmbracelet/log"
 	"github.com/pkg/errors"
 )

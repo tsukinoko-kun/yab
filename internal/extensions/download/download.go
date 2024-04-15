@@ -3,8 +3,8 @@ package download
 import (
 	"strings"
 
-	"github.com/Frank-Mayer/gopher-lua"
-	"github.com/Frank-Mayer/yab/internal/util"
+	"github.com/tsukinoko-kun/gopher-lua"
+	"github.com/tsukinoko-kun/yab/internal/util"
 )
 
 func Download(l *lua.LState) int {

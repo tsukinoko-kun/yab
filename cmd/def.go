@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/Frank-Mayer/yab/internal/mainutil"
+	"github.com/tsukinoko-kun/yab/internal/mainutil"
 	"github.com/spf13/cobra"
 )
 

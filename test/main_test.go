@@ -3,8 +3,8 @@ package test_test
 import (
 	"testing"
 
-	"github.com/Frank-Mayer/yab/internal/mainutil"
-	"github.com/Frank-Mayer/yab/internal/util"
+	"github.com/tsukinoko-kun/yab/internal/mainutil"
+	"github.com/tsukinoko-kun/yab/internal/util"
 	"github.com/charmbracelet/log"
 )
 

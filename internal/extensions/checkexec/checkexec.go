@@ -3,7 +3,7 @@ package checkexec
 import (
 	"os/exec"
 
-	"github.com/Frank-Mayer/gopher-lua"
+	"github.com/tsukinoko-kun/gopher-lua"
 )
 
 func CheckExec(l *lua.LState) int {

@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/Frank-Mayer/yab/internal/docs"
+	"github.com/tsukinoko-kun/yab/internal/docs"
 )
 
 func main() {

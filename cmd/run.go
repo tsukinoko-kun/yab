@@ -4,9 +4,9 @@ import (
 	"os"
 	"os/exec"
 
-	argsext "github.com/Frank-Mayer/yab/internal/extensions/args"
-	"github.com/Frank-Mayer/yab/internal/mainutil"
-	"github.com/Frank-Mayer/yab/internal/util"
+	argsext "github.com/tsukinoko-kun/yab/internal/extensions/args"
+	"github.com/tsukinoko-kun/yab/internal/mainutil"
+	"github.com/tsukinoko-kun/yab/internal/util"
 	"github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
 )

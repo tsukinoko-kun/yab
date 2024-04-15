@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Frank-Mayer/yab/internal/util"
+	"github.com/tsukinoko-kun/yab/internal/util"
 	"github.com/charmbracelet/log"
 	"github.com/pkg/errors"
 	hash "github.com/segmentio/fasthash/fnv1a"

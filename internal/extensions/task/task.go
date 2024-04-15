@@ -3,9 +3,9 @@ package task
 import (
 	"path/filepath"
 
-	"github.com/Frank-Mayer/gopher-lua"
-	"github.com/Frank-Mayer/yab/internal/cache"
-	"github.com/Frank-Mayer/yab/internal/extensions/pretty"
+	"github.com/tsukinoko-kun/gopher-lua"
+	"github.com/tsukinoko-kun/yab/internal/cache"
+	"github.com/tsukinoko-kun/yab/internal/extensions/pretty"
 	"github.com/charmbracelet/log"
 )
 

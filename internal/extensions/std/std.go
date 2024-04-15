@@ -5,8 +5,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/Frank-Mayer/gopher-lua"
-	"github.com/Frank-Mayer/yab/internal/util"
+	"github.com/tsukinoko-kun/gopher-lua"
+	"github.com/tsukinoko-kun/yab/internal/util"
 )
 
 // call a shell command and return the full output (stdout + stderr) in one string

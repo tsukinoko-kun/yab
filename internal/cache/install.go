@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/Frank-Mayer/yab/internal/util"
+	"github.com/tsukinoko-kun/yab/internal/util"
 )
 
 func InstallPath(pack string, version string) (string, error) {

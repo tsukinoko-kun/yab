@@ -1,4 +1,4 @@
-# Documentation v0.6.1
+# Documentation v0.6.2
 
 ## Usage
 

@@ -3,7 +3,7 @@ package ostype
 import (
 	"runtime"
 
-	"github.com/Frank-Mayer/gopher-lua"
+	"github.com/tsukinoko-kun/gopher-lua"
 )
 
 func OsType(l *lua.LState) int {

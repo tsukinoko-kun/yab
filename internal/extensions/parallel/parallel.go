@@ -3,7 +3,7 @@ package parallel
 import (
 	"sync"
 
-	"github.com/Frank-Mayer/gopher-lua"
+	"github.com/tsukinoko-kun/gopher-lua"
 )
 
 // Parallel executes a given set of functions in parallel.

@@ -1,6 +1,6 @@
 package main
 
-import "github.com/Frank-Mayer/yab/cmd"
+import "github.com/tsukinoko-kun/yab/cmd"
 
 func main() {
 	cmd.Execute()
