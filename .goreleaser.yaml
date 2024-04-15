@@ -25,11 +25,11 @@ universal_binaries:
 
 brews:
   - name: yab
-    homepage: https://github.com/Frank-Mayer/yab
+    homepage: https://github.com/tsukinoko-kun/yab
     description: Yet another build tool
     repository:
-      owner: Frank-Mayer
+      owner: tsukinoko-kun
       name: homebrew-tap
     commit_author:
-      name: Frank-Mayer
+      name: tsukinoko-kun
       email: gh@frankmayer.dev
