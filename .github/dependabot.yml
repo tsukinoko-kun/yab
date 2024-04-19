@@ -7,7 +7,7 @@ updates:
     allow:
       - dependency-type: all
     assignees:
-      - Frank-Mayer
+      - tsukinoko-kun
     reviewers:
-      - Frank-Mayer
+      - tsukinoko-kun
     target-branch: dev
