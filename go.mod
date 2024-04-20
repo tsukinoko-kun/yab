@@ -12,7 +12,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/segmentio/fasthash v1.0.3
 	github.com/spf13/cobra v1.8.0
-	github.com/tsukinoko-kun/gopher-lua v1.2.2
+	github.com/tsukinoko-kun/gopher-lua v1.3.1
 )
 
 require (
@@ -51,7 +51,7 @@ require (
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/skeema/knownhosts v1.2.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/tsukinoko-kun/ohmygosh v0.2.1 // indirect
+	github.com/tsukinoko-kun/ohmygosh v0.3.0 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	github.com/yuin/goldmark v1.5.2 // indirect
 	github.com/yuin/goldmark-emoji v1.0.1 // indirect

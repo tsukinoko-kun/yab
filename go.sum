@@ -134,10 +134,10 @@ github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81P
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
-github.com/tsukinoko-kun/gopher-lua v1.2.2 h1:AZ20gdZQvRg2CAKKWqpph3gVAZKWLaW0kXfQIyiV2Os=
-github.com/tsukinoko-kun/gopher-lua v1.2.2/go.mod h1:/MNSHx+YfdmGiqQFdLwZ7ipDPwW2bC/f5e5uRJ82PKw=
-github.com/tsukinoko-kun/ohmygosh v0.2.1 h1:MwpManStEcyuRJ5TFRxG37RA2vuZDBQK8yFeh6LGDT8=
-github.com/tsukinoko-kun/ohmygosh v0.2.1/go.mod h1:a6ATMQj3d9lGlfDsiMuOPEDwr2XYpwUfSBMg3wzh3T8=
+github.com/tsukinoko-kun/gopher-lua v1.3.0 h1:avSe0Tst/9LcPtCYxfBGSmW/8IYb4wxbF+PWCKaD1k0=
+github.com/tsukinoko-kun/gopher-lua v1.3.0/go.mod h1:rK+s3hoN4Y1eNIdUeGPL7uY7HBpw199UMpw4BIsSXSM=
+github.com/tsukinoko-kun/ohmygosh v0.3.0 h1:CjKBRkwdcscmIjQj6C6s34Tjg2b5vrLFpnqBzfpDjVs=
+github.com/tsukinoko-kun/ohmygosh v0.3.0/go.mod h1:rW3RWVUgtH8o2wNeK+CeX0FiC0mWZou2DtaY2FTNMPA=
 github.com/xanzy/ssh-agent v0.3.3 h1:+/15pJfg/RsTxqYcX6fHqOXZwwMP+2VyYWJeWM2qQFM=
 github.com/xanzy/ssh-agent v0.3.3/go.mod h1:6dzNDKs0J9rVPHPhaGCukekBHKqfl+L3KghI1Bc68Uw=
 github.com/yuin/goldmark v1.2.1/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
